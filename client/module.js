@@ -1,4 +1,4 @@
-import utils from "../node_modules/@gilads-otiannoh24/alpine-csp-utils/dist/utils.esm.js";
+import utils from "../dist/utils.js";
 import Alpine from "../node_modules/alpinejs/dist/module.esm.js";
 
 window.Alpine = Alpine;
