@@ -2,13 +2,18 @@
   "name": "@gilads-otiannoh24/alpine-csp-utils",
   "version": "1.0.2-beta.6",
   "description": "A set of alpinejs utility functions for working with alpinejs Content Security Policy (CSP) build easier",
-  "main": "dist/utils.js",
   "types": "dist/utils.d.ts",
   "keywords": [
     "alpinejs",
     "csp",
     "utils"
   ],
+  "main": "./dist/utils.cjs.js",
+  "module": "./dist/utils.esm.js",
+  "exports": {
+    "import": "./dist/utils.esm.js",
+    "require": "./dist/utils.cjs.js"
+  },
   "author": "Ian Ochieng",
   "license": "MIT",
   "directories": {
