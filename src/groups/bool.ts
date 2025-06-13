@@ -8,7 +8,7 @@ export interface BooleanUtils {
   isFalse(alpine?: AlpineComponent<any>): boolean;
 }
 
-export function dates($el: HTMLElement): BooleanUtils {
+export function bool($el: HTMLElement): BooleanUtils {
   return {
     toggle(alpine) {
       const ctx = useContext(this, alpine, "toggle", "var", true);

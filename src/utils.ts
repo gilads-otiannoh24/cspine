@@ -1,14 +1,11 @@
-import { AlpineComponent, Alpine as AlpineGlobal } from "alpinejs";
-import { resolveData } from "@src/utils/resolveDatasetValue";
-import { getAlpineInstance } from "@src/utils/getAlpineInstance";
-import { accessVariable } from "@src/utils/accessVariable";
-import { useContext } from "./utils/useContext";
+import { Alpine as AlpineGlobal } from "alpinejs";
 import { states, StateUtils } from "./groups/state";
 import { array, ArrayUtils } from "./groups/array";
 import { UtilsFns, utilsFns } from "./groups/utils";
 import { dates, DateUtils } from "./groups/date";
 import { logic, LogicUtils } from "./groups/logic";
 import { string, StringUtils } from "./groups/string";
+import { bool, BooleanUtils } from "./groups/bool";
 
 interface Utils {
   state: StateUtils;
@@ -17,6 +14,7 @@ interface Utils {
   date: DateUtils;
   logic: LogicUtils;
   string: StringUtils;
+  bool: BooleanUtils;
 }
 
 export default function utils(Alpine: AlpineGlobal) {
@@ -29,6 +27,7 @@ export default function utils(Alpine: AlpineGlobal) {
       date: dates($el),
       logic: logic($el),
       string: string($el),
+      bool: bool($el),
     })
   );
 }
