@@ -1,27 +1,33 @@
 {
-  "name": "alpine-csp-utils",
+  "name": "@gilads-otiannoh24/alpine-csp-utils",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A set of alpinejs utility functions for working with alpinejs Content Security Policy (CSP) build easier",
+  "main": "dist/utils.js",
+  "types": "dist/utils.d.ts",
+  "keywords": [
+    "alpinejs",
+    "csp",
+    "utils"
+  ],
+  "author": "Ian Ochieng",
+  "license": "MIT",
   "directories": {
     "test": "tests"
   },
   "scripts": {
     "test": "vitest",
-    "dev": "webpack --watch"
+    "dev": "webpack --watch",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thewebforge/alpinejs-plugin-blueprint.git"
+    "url": "git+https://github.com/gilads-otiannoh24/alpine-csp-utils"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/thewebforge/alpinejs-plugin-blueprint/issues"
+    "url": "https://github.com/gilads-otiannoh24/alpine-csp-utils/issues"
   },
-  "homepage": "https://github.com/thewebforge/alpinejs-plugin-blueprint#readme",
+  "homepage": "https://github.com/gilads-otiannoh24/alpine-csp-utils#readme",
   "devDependencies": {
     "@types/alpinejs": "^3.13.11",
     "ts-loader": "^9.5.2",
