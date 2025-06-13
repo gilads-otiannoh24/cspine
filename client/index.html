@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="../dist/cdn.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@alpinejs/csp@3.x.x/dist/cdn.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css"
+    />
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #1d1c1c;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div x-data="page">
+      <div class="row">
+        <div>
+          <h2>Set working example</h2>
+          <div x-show="show">Am hidden by default</div>
+
+          <button
+            data-var="show"
+            data-cast="value=boolean"
+            data-value="true"
+            @click="$_.state.set"
+          >
+            Show
+          </button>
+        </div>
+
+        <div>
+          <h2>Counter example for inc and dec</h2>
+
+          <div>
+            <span x-text="count"></span>
+            <!-- It is recommended to scop values much as possible to avoid varible collition. When the action is
+            only dependant on one function alone it moght not he necessary but when there is more than one you
+             need to scope -->
+            <div>
+              <button data-var="count" @click="$_.state.dec">-</button>
+              <button data-var="count" @click="$_.state.inc">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2>Toggle example</h2>
+
+          <div x-show="show">Am hidden by default</div>
+
+          <button data-var="show" @click="$_.state.toggle">Toggle</button>
+        </div>
+
+        <div>
+          <h2>Empty example</h2>
+
+          <div data-var="emptyObject" x-show="$_.state.empty">
+            Am an empty string, object or array
+          </div>
+        </div>
+      </div>
+
+      <div class="row"></div>
+    </div>
+
+    <script>
+      function setUpPage() {
+        window.addEventListener("alpine:init", () => {
+          Alpine.data("page", () => ({
+            show: false,
+            count: 0,
+            emptyString: "eiejfiefjiefj",
+            emptyArray: ["fgfgfgf"],
+            emptyObject: {},
+          }));
+        });
+      }
+
+      setUpPage();
+    </script>
+  </body>
+</html>

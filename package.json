@@ -1,21 +1,34 @@
 {
-  "name": "@thewebforge/aplinejs-plugin-blueprint",
+  "name": "alpine-csp-utils",
   "version": "1.0.0",
-  "description": "A blueprint to build an Alpine.js plugin",
-  "homepage": "https://thewebforge.dev/plugins/focus",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/thewebforge/aplinejs-plugin-blueprint.git"
-  },
-  "author": "Cédric Bontems",
-  "license": "MIT",
-  "main": "dist/module.cjs.js",
-  "module": "dist/module.esm.js",
-  "unpkg": "dist/cdn.min.js",
-  "devDependencies": {
-    "esbuild": "~0.16.17"
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
   },
   "scripts": {
-    "build": "node ./scripts/build.js"
+    "test": "vitest",
+    "dev": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thewebforge/alpinejs-plugin-blueprint.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/thewebforge/alpinejs-plugin-blueprint/issues"
+  },
+  "homepage": "https://github.com/thewebforge/alpinejs-plugin-blueprint#readme",
+  "devDependencies": {
+    "@types/alpinejs": "^3.13.11",
+    "ts-loader": "^9.5.2",
+    "vitest": "^3.2.3",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "alpinejs": "^3.14.9"
   }
 }

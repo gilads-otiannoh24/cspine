@@ -1,0 +1,75 @@
+reset()
+Reset a variable to its default value (if tracked), or to empty string/array/object depending on type.
+
+push()
+Push a value to an array.
+
+pop()
+Pop last value from an array.
+
+shift() / unshift()
+Like pop()/push() but for the start of the array.
+
+assign()
+Assign all fields from one object to another (shallow merge).
+
+🔍 State Checking
+not()
+Inverts any truthy/falsy check. Like !variable.
+
+type()
+Returns a string of the variable’s type ("string", "array", "object", "boolean", "number", "null", etc).
+
+includes()
+For arrays or strings — data-needle="value" to check if var.includes(needle).
+
+equals() / notEquals()
+Checks if variable equals a given value.
+
+greaterThan() / lessThan()
+Numerical comparison.
+
+🎯 String Utilities
+length()
+Get length of array/string.
+
+contains()
+Check if string contains a substring.
+
+toUpper() / toLower()
+Casing utilities.
+
+📅 Date Utilities
+formatDate()
+Using date-fns or native Date, format a value to a date string.
+
+now()
+Set a variable to the current date/time.
+
+🧠 Logic Helpers
+if() / unless()
+Use to simulate conditional checks for DOM visibility/logic.
+
+every() / some()
+Evaluate a condition over an array.
+
+🧹 General Utilities
+clone()
+Deep or shallow clone a variable.
+
+log()
+Console log a variable or expression.
+
+debounce() / throttle()
+Wrap a method call with debounce or throttle (can leverage lodash for this).
+
+🧪 Advanced / CSP-Guarded Ideas
+call()
+Dynamically call a function from data-fn or data-call, e.g. data-call="refreshList".
+
+bindTo()
+Bind the output of one variable or computation to another.
+
+switch()
+Emulate switch logic: data-switch="user.role" with case datasets.
+
