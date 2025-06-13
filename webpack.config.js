@@ -33,25 +33,6 @@ const cdnBuild = {
   devtool: "source-map",
 };
 
-/** 2. ESM build */
-const normalBuild = {
-  entry: "./src/utils.ts",
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "utils.js",
-    library: {
-      type: "module",
-    },
-  },
-  module: { rules: [tsRule] },
-  resolve,
-  experiments: {
-    outputModule: true,
-  },
-  mode: "production",
-  devtool: "source-map",
-};
-
 const esmBuild = {
   entry: "./src/utils.ts",
   output: {
@@ -86,4 +67,4 @@ const cjsBuild = {
   devtool: "source-map",
 };
 
-module.exports = [cdnBuild, normalBuild, esmBuild, cjsBuild];
+module.exports = [cdnBuild, esmBuild, cjsBuild];
