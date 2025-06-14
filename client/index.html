@@ -74,7 +74,19 @@
         </div>
       </div>
 
-      <div class="row"></div>
+      <div class="row">
+        <div data-var="nullValue" data-type="null" x-show="$_.state.type">
+          Null
+        </div>
+
+        <button
+          data-var="nullValue"
+          data-cast="value=null"
+          @click="$_.state.set"
+        >
+          Set to Null
+        </button>
+      </div>
     </div>
 
     <script>
@@ -83,6 +95,7 @@
           Alpine.data("page", () => ({
             show: false,
             count: 0,
+            nullValue: 1,
             emptyString: "eiejfiefjiefj",
             emptyArray: ["fgfgfgf"],
             emptyObject: {},

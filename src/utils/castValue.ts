@@ -1,19 +1,21 @@
 export function castValue(value: string, type: string): any {
   switch (type.toLowerCase()) {
-    case 'number':
+    case "number":
       return Number(value);
-    case 'boolean':
-      return value === 'true';
-    case 'string':
+    case "boolean":
+      return value === "true";
+    case "string":
       return String(value);
-    case 'array':
+    case "null":
+      return null;
+    case "array":
       try {
         const parsed = JSON.parse(value);
         return Array.isArray(parsed) ? parsed : [parsed];
       } catch {
-        return value.split(',').map(item => item.trim());
+        return value.split(",").map((item) => item.trim());
       }
-    case 'object':
+    case "object":
       try {
         return JSON.parse(value);
       } catch {
