@@ -37,29 +37,24 @@ const esmBuild = {
   entry: "./src/utils.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "utils.esm.js",
-    library: {
-      type: "module",
-    },
+    filename: "module.mjs",
+    library: { type: "module" },
   },
   module: { rules: [tsRule] },
   resolve,
   experiments: {
-    outputModule: true,
+    outputModule: true, // key for ES Modules
   },
   mode: "production",
   devtool: "source-map",
 };
 
-/** 3. CommonJS build */
 const cjsBuild = {
   entry: "./src/utils.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "utils.cjs.js",
-    library: {
-      type: "commonjs2",
-    },
+    filename: "module.js",
+    library: { type: "commonjs2" },
   },
   module: { rules: [tsRule] },
   resolve,

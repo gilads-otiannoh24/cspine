@@ -8,11 +8,11 @@
     "csp",
     "utils"
   ],
-  "main": "./dist/utils.cjs.js",
-  "module": "./dist/utils.esm.js",
+  "main": "./dist/module.js",
+  "module": "./dist/module.mjs",
   "exports": {
-    "import": "./dist/utils.esm.js",
-    "require": "./dist/utils.cjs.js"
+    "import": "./dist/module.mjs",
+    "require": "./dist/module.js"
   },
   "author": "Ian Ochieng",
   "license": "MIT",
