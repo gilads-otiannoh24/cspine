@@ -37,7 +37,7 @@ Using cdn:
 Or via npm (soon):
 
 ```bash Copy Edit
-npm install cspine
+npm i @gilads-otiannoh24/cspine
 ```
 
 Then in your Alpine bootfile:
