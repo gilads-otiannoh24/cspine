@@ -34,10 +34,13 @@ const cdnBuild = {
 };
 
 const esmBuild = {
-  entry: "./src/CSPine.ts",
+  entry: {
+    module: "./src/CSPine.ts",
+    utils: "./src/index.ts",
+  },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "module.mjs",
+    filename: "[name].mjs",
     library: { type: "module" },
   },
   module: { rules: [tsRule] },
@@ -50,10 +53,13 @@ const esmBuild = {
 };
 
 const cjsBuild = {
-  entry: "./src/CSPine.ts",
+  entry: {
+    module: "./src/CSPine.ts",
+    utils: "./src/index.ts",
+  },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "module.js",
+    filename: "[name].js",
     library: { type: "commonjs2" },
   },
   module: { rules: [tsRule] },

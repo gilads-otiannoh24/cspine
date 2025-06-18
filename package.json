@@ -1,5 +1,5 @@
 {
-  "name": "@gilads-otiannoh24/alpine-csp-utils",
+  "name": "@gilads-otiannoh24/cspine",
   "version": "1.0.2-beta.9",
   "description": "A set of alpinejs utility functions for working with alpinejs Content Security Policy (CSP) build easier",
   "types": "dist/utils.d.ts",
@@ -11,8 +11,14 @@
   "main": "./dist/module.js",
   "module": "./dist/module.mjs",
   "exports": {
-    "import": "./dist/module.mjs",
-    "require": "./dist/module.js"
+    ".": {
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.js"
+    },
+    "./utils": {
+      "import": "./dist/utils.mjs",
+      "require": "./dist/utils.js"
+    }
   },
   "author": "Ian Ochieng",
   "license": "MIT",

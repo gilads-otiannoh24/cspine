@@ -3,3 +3,5 @@ webpack.config.js
 tsconfig.json
 README-dev.md
 client/
+
+features.txt
