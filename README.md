@@ -44,9 +44,13 @@ Then in your Alpine bootfile:
 
 ```js Copy Edit
 import Alpine from "@alpinejs/csp";
-import CSPine from "cspine";
+import CSPine from "@gilads-otiannoh24/cspine";
 
-Alpine.plugin(CSPine);
+CSPine.config = {
+  /* any config  goes here */
+};
+
+Alpine.plugin(CSPine.plugin);
 Alpine.start();
 ```
 
@@ -73,11 +77,17 @@ Each function uses a data-\* or CSP-safe @event format like: html Copy Edit
 Here is a simple counter implementation with CSPine:
 
 ```html Copy Edit
-<div x-data="{ count: 0 }">
+<div x-data="Counter">
   <button @click="$_.state.inc" data-var="count">+</button>
   <button @click="$_.state.dec" data-var="count">-</button>
   <p x-text="count"></p>
 </div>
+
+<script>
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("Counter", () => ({ count: 0 }));
+  });
+</script>
 ```
 
 ## 🧪 Tested & Trusted
