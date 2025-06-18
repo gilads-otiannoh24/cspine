@@ -22,7 +22,7 @@ const cdnBuild = {
     path: path.resolve(__dirname, "dist"),
     filename: "cdn.min.js",
     library: {
-      name: "AlpineCSPUtils",
+      name: "CSPine",
       type: "umd",
     },
     globalObject: "this",

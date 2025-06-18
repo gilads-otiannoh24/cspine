@@ -3,5 +3,9 @@ webpack.config.js
 tsconfig.json
 README-dev.md
 client/
-
+vitest.config.js
 features.txt
+tests/
+examples/
+docs/
+.vscode/
