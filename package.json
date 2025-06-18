@@ -32,15 +32,20 @@
   "bugs": {
     "url": "https://github.com/gilads-otiannoh24/alpine-csp-utils/issues"
   },
+  "sideEffects": false,
   "homepage": "https://github.com/gilads-otiannoh24/alpine-csp-utils#readme",
   "devDependencies": {
     "@types/alpinejs": "^3.13.11",
+    "@types/jsdom": "^21.1.7",
+    "@types/lodash": "^4.17.17",
+    "jsdom": "^26.1.0",
     "ts-loader": "^9.5.2",
     "vitest": "^3.2.3",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
-    "@gilads-otiannoh24/alpine-csp-utils": "^1.0.2-beta.1",
-    "alpinejs": "^3.14.9"
+    "@alpinejs/csp": "^3.14.9",
+    "alpinejs": "^3.14.9",
+    "lodash": "^4.17.21"
   }
 }

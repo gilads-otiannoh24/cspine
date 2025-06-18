@@ -1,4 +1,4 @@
-import { resolveDatasetValue } from "../src/utils/resolveDatasetValue";
+import { resolveDatasetValue } from "@/utils/resolveDatasetValue";
 import { describe, expect, test } from "vitest";
 
 describe("resolveDatasetValue", () => {

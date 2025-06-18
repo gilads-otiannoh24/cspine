@@ -73,3 +73,8 @@ Bind the output of one variable or computation to another.
 switch()
 Emulate switch logic: data-switch="user.role" with case datasets.
 
+Alpine csp side effect
+This is used to run an action after calling another
+
+Am thinking of doing soemthing like data-effect="execute" with chaining like "execute~42,45->execute2" 
+with ~ providing the arguments for each function and -> for chaining

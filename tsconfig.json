@@ -11,15 +11,16 @@
 
     "baseUrl": "./src",
     "paths": {
-      "@src/*": ["./*"]
+      "@/*": ["./*"]
     },
 
     "declaration": true,
     "sourceMap": true,
     "outDir": "dist",
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "tests/**/*", "types/**/*"],
   "exclude": ["node_modules", "dist"]
 }

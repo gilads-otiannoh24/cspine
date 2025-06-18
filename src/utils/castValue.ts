@@ -8,6 +8,10 @@ export function castValue(value: string, type: string): any {
       return String(value);
     case "null":
       return null;
+    case "true":
+      return true;
+    case "false":
+      return false;
     case "array":
       try {
         const parsed = JSON.parse(value);

@@ -10,7 +10,7 @@ const tsRule = {
 /** Resolve config */
 const resolve = {
   alias: {
-    "@src": path.resolve(__dirname, "src/"),
+    "@": path.resolve(__dirname, "src/"),
   },
   extensions: [".ts", ".js"],
 };
@@ -34,7 +34,7 @@ const cdnBuild = {
 };
 
 const esmBuild = {
-  entry: "./src/utils.ts",
+  entry: "./src/CSPine.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "module.mjs",
@@ -50,7 +50,7 @@ const esmBuild = {
 };
 
 const cjsBuild = {
-  entry: "./src/utils.ts",
+  entry: "./src/CSPine.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "module.js",

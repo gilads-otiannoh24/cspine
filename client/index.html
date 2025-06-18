@@ -25,7 +25,7 @@
       }
     </style>
   </head>
-  <body>
+  <body x-data="CSPine">
     <div x-data="page">
       <div class="row">
         <div>
@@ -86,6 +86,39 @@
         >
           Set to Null
         </button>
+
+        <div data-cast="case=boolean" x-switch="isLoggedIn">
+          <div data-case="true">
+            Am logged in
+            <button
+              data-var="isLoggedIn"
+              data-cast="value=boolean"
+              data-value="false"
+              @click="$_.state.set"
+            >
+              Sign out
+            </button>
+          </div>
+          <div data-case="false">
+            Am logged out
+            <button
+              data-var="isLoggedIn"
+              data-cast="value=boolean"
+              data-value="true"
+              @click="$_.state.set"
+            >
+              Log in
+            </button>
+          </div>
+        </div>
+
+        <p x-text="isLoggedIn"></p>
+        <p data-type="boolean" data-var="isLoggedIn" x-show="$_.state.type">
+          Bool
+        </p>
+        <p data-type="string" data-var="isLoggedIn" x-show="$_.state.type">
+          String
+        </p>
       </div>
     </div>
 
@@ -94,6 +127,7 @@
         window.addEventListener("alpine:init", () => {
           Alpine.data("page", () => ({
             show: false,
+            isLoggedIn: true,
             count: 0,
             nullValue: 1,
             emptyString: "eiejfiefjiefj",
