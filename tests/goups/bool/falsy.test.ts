@@ -19,7 +19,7 @@ describe("isFalse bool function", () => {
 
     setupTestFrame(
       /* html */ `
-      <span id="output" data-var="foo" x-show="$_.bool.isFalse"></span>
+      <span id="output" data-var="foo" x-show="$_.bool.falsy"></span>
   `,
       data
     );

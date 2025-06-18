@@ -28,9 +28,14 @@ Using cdn:
 
 ```html Copy Edit
 <script
-  defer
-  src="https://cdn.example.com/cspine.min.js"
+  src="https://unpkg.com/@gilads-otiannoh24/cspine@0.0.1-alpha/dist/cdn.min.js"
   type="module"
+></script>
+
+<!-- Ensure to include Alpine.js csp build -->
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/@alpinejs/csp@3.x.x/dist/cdn.min.js"
 ></script>
 ```
 

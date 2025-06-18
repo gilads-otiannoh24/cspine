@@ -2,7 +2,7 @@ import { accessVariable } from "@/utils/accessVariable";
 import { useContext } from "@/utils/useContext";
 import { AlpineComponent } from "alpinejs";
 
-export function isFalse(el: HTMLElement, alpine: AlpineComponent<any>) {
+export function falsy(el: HTMLElement, alpine: AlpineComponent<any>) {
   const ctx = useContext(alpine, alpine, "isFalse", "var", true);
 
   const cp = ctx.cp;

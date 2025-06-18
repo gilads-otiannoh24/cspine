@@ -2,13 +2,13 @@ import { CSPineUtil } from "@/CSPine";
 import { AlpineComponent } from "alpinejs";
 import { toggle } from "./toggle";
 import { getAlpineInstance } from "@/utils/getAlpineInstance";
-import { isTrue } from "./isTrue";
-import { isFalse } from "./isFalse";
+import { truthy } from "./truthy";
+import { falsy } from "./falsy";
 
 export interface BooleanUtils {
   toggle(alpine?: AlpineComponent<any>): void;
-  isTrue(alpine?: AlpineComponent<any>): boolean;
-  isFalse(alpine?: AlpineComponent<any>): boolean;
+  truthy(alpine?: AlpineComponent<any>): boolean;
+  falsy(alpine?: AlpineComponent<any>): boolean;
 }
 
 export function bool($el: HTMLElement): CSPineUtil<BooleanUtils> {
@@ -17,12 +17,12 @@ export function bool($el: HTMLElement): CSPineUtil<BooleanUtils> {
       toggle($el, getAlpineInstance(this, alpine));
     },
 
-    isTrue(alpine) {
-      return isTrue($el, getAlpineInstance(this, alpine));
+    truthy(alpine) {
+      return truthy($el, getAlpineInstance(this, alpine));
     },
 
-    isFalse(alpine) {
-      return isFalse($el, getAlpineInstance(this, alpine));
+    falsy(alpine) {
+      return falsy($el, getAlpineInstance(this, alpine));
     },
 
     $config: {
