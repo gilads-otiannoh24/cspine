@@ -28,7 +28,7 @@ Using cdn:
 
 ```html Copy Edit
 <script
-  src="https://unpkg.com/@gilads-otiannoh24/cspine@0.0.1-alpha/dist/cdn.min.js"
+  src="https://unpkg.com/@gilads-otiannoh24/cspine@0.0.4/dist/cdn.min.js"
   type="module"
 ></script>
 

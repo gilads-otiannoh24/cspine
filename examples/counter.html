@@ -6,7 +6,7 @@
     <title>Document</title>
 
     <script
-      src="https://unpkg.com/@gilads-otiannoh24/cspine@0.0.2/dist/cdn.min.js"
+      src="https://unpkg.com/@gilads-otiannoh24/cspine@0.0.4/dist/cdn.min.js"
       type="module"
     ></script>
 
@@ -15,12 +15,20 @@
       defer
       src="https://cdn.jsdelivr.net/npm/@alpinejs/csp@3.x.x/dist/cdn.min.js"
     ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura.css"
+      type="text/css"
+    />
   </head>
   <body>
     <div x-data="Counter">
-      <button @click="$_.state.inc" data-var="count">+</button>
-      <button @click="$_.state.dec" data-var="count">-</button>
+      <h2>CSPine counter implemenetation</h2>
       <p x-text="count"></p>
+
+      <button @click="$_.state.dec" data-var="count">-</button>
+      <button @click="$_.state.inc" data-var="count">+</button>
     </div>
 
     <script>
