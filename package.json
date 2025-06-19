@@ -14,12 +14,12 @@
     ".": {
       "import": "./dist/module.mjs",
       "require": "./dist/module.js",
-      "types": "./dist/types/CSPine.d.ts"
+      "types": "./dist/types/src/CSPine.d.ts"
     },
     "./utils": {
       "import": "./dist/utils.mjs",
       "require": "./dist/utils.js",
-      "types": "./dist/types/index.d.ts"
+      "types": "./dist/types/src/index.d.ts"
     }
   },
   "author": "Ian Ochieng",
