@@ -8,12 +8,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-
     "baseUrl": "./src",
+    "declarationDir": "dist/types",
     "paths": {
       "@/*": ["./*"]
     },
-
     "declaration": true,
     "sourceMap": true,
     "outDir": "dist",

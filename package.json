@@ -13,11 +13,13 @@
   "exports": {
     ".": {
       "import": "./dist/module.mjs",
-      "require": "./dist/module.js"
+      "require": "./dist/module.js",
+      "types": "./dist/types/CSPine.d.ts"
     },
     "./utils": {
       "import": "./dist/utils.mjs",
-      "require": "./dist/utils.js"
+      "require": "./dist/utils.js",
+      "types": "./dist/types/index.d.ts"
     }
   },
   "author": "Ian Ochieng",
@@ -27,8 +29,9 @@
   },
   "scripts": {
     "test": "vitest",
+    "types": "tsc --project tsconfig.json",
     "dev": "webpack --watch",
-    "build": "webpack"
+    "build": "webpack && npm run types"
   },
   "repository": {
     "type": "git",
@@ -38,7 +41,6 @@
   "bugs": {
     "url": "https://github.com/gilads-otiannoh24/alpine-csp-utils/issues"
   },
-  "sideEffects": false,
   "homepage": "https://github.com/gilads-otiannoh24/alpine-csp-utils#readme",
   "devDependencies": {
     "@types/alpinejs": "^3.13.11",
