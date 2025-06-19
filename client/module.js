@@ -5,5 +5,5 @@ window.Alpine = Alpine;
 
 Alpine.data("CSPine", () => data);
 
-Alpine.plugin(CSPine);
+Alpine.plugin(CSPine.plugin);
 Alpine.start();

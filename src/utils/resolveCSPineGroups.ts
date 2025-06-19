@@ -5,6 +5,7 @@ import { date } from "@/groups/dates";
 import { logic } from "@/groups/logics";
 import state from "@/groups/states";
 import { string } from "@/groups/strings";
+import { ui } from "@/groups/ui";
 import { util } from "@/groups/utils";
 
 export function resolveCSPineGroups(
@@ -20,6 +21,7 @@ export function resolveCSPineGroups(
       logic: logic(el),
       string: string(el),
       bool: bool(el),
+      ui: ui(el),
     };
   }
 

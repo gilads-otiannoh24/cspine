@@ -23,6 +23,14 @@
         background-color: #1d1c1c;
         color: white;
       }
+
+      .bg-red {
+        background-color: red;
+      }
+
+      .bg-blue {
+        background-color: blue;
+      }
     </style>
   </head>
   <body x-data="CSPine">
@@ -119,6 +127,17 @@
         <p data-type="string" data-var="isLoggedIn" x-show="$_.state.type">
           String
         </p>
+
+        <div
+          data-var="bg"
+          data-true="bg-red"
+          data-false="bg-blue"
+          :class="$_.ui.classToggle"
+        >
+          Bg color toggle
+        </div>
+
+        <button data-var="bg" @click="$_.bool.toggle">toggle Bg</button>
       </div>
     </div>
 
@@ -127,6 +146,7 @@
         window.addEventListener("alpine:init", () => {
           Alpine.data("page", () => ({
             show: false,
+            bg: true,
             isLoggedIn: true,
             count: 0,
             nullValue: 1,

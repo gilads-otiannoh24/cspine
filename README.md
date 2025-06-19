@@ -73,7 +73,6 @@ Alpine.start();
 Each function uses a data-\* or CSP-safe @event format like: html Copy Edit
 
 ```html
-<div data-bind-to="total=price * qty"></div>
 <button data-call="submitForm"></button>
 ```
 
