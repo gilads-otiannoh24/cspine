@@ -5,12 +5,15 @@ import { handleOperators } from "@/utils/handleOperators";
 import { resolveData } from "@/utils/resolveDatasetValue";
 import { useContext } from "@/utils/useContext";
 import { AlpineComponent } from "alpinejs";
+import { log } from "./log";
+import { getAlpineInstance } from "@/utils/getAlpineInstance";
 
 export interface Utils {
   switch(alpine: AlpineComponent<any>): void;
   bindTo(alpine: AlpineComponent<any>): void;
   call(alpine: AlpineComponent<any>): any;
   callCSPine(alpine: AlpineComponent<any>): any;
+  log(alpine: AlpineComponent<any>): any;
 }
 
 export function util($el: HTMLElement): CSPineUtil<Utils> {
@@ -96,6 +99,11 @@ export function util($el: HTMLElement): CSPineUtil<Utils> {
         );
       }
     },
+
+    log(alpine) {
+      log($el, getAlpineInstance(this, alpine));
+    },
+
     $config: {
       name: "util",
     },
