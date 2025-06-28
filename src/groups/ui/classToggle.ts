@@ -1,14 +1,15 @@
+import { MagicUtilitiesWithContext } from "@/CSPine";
 import { accessVariable } from "@/utils/accessVariable";
 import { resolveData } from "@/utils/resolveDatasetValue";
 import { useContext } from "@/utils/useContext";
-import { AlpineComponent } from "alpinejs";
+import { MagicUtilities } from "alpinejs";
 
 export function classToggle(
   el: HTMLElement,
-  alpine: AlpineComponent<any>
+  options: MagicUtilitiesWithContext
 ): string {
-  const ctx = useContext(alpine, alpine, "classToggle", "var", true);
-  const cp = ctx.cp;
+  const ctx = useContext(el, "classToggle", "var", true);
+  const cp = options.this;
 
   const varName = ctx.varName;
 

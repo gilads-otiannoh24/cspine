@@ -46,3 +46,11 @@ export function parseVariablePath(path: string): PathDetails {
     path: isNegated ? path.slice(1) : path,
   };
 }
+
+export function setVariable(
+  instance: AlpineComponent<any>,
+  path: string,
+  value: any
+): any {
+  return accessVariable(instance, path, "set", value);
+}

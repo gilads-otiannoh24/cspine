@@ -1,8 +1,7 @@
-import {
-  AlpineComponent,
+import Alpine, {
   Alpine as AlpineGlobal,
   InferInterceptors,
-  plugin,
+  MagicUtilities,
 } from "alpinejs";
 import { resolveData } from "./utils/resolveDatasetValue";
 import { resolveCSPineGroups } from "./utils/resolveCSPineGroups";
@@ -11,7 +10,15 @@ export interface CSPineUtils {
   [key: string]: CSPineUtil<any>;
 }
 
-export type CSPineGroup = (el: HTMLElement) => CSPineUtil<any>;
+export type MagicUtilitiesWithContext = Alpine.MagicUtilities & {
+  this: ThisType<any>;
+};
+
+export type CSPineGroup = (
+  el: HTMLElement,
+  options: MagicUtilities,
+  config: Config
+) => CSPineUtil<any>;
 
 export interface Data {
   True: true;
@@ -25,23 +32,42 @@ export type CSPineUtil<T> = T & {
   };
 };
 
+export type Config = CSPine["config"];
+
 export interface CSPine {
   config: {
-    functions?: string[];
     groups?: CSPineGroup[];
+    useV2Parsing: boolean;
   };
   plugin(Alpine: AlpineGlobal): void;
 }
 
 const CSPine: CSPine = {
   config: {
-    functions: [],
     groups: [],
+    useV2Parsing: false,
   },
 
   plugin(Alpine: AlpineGlobal) {
-    Alpine.magic("_", ($el): any =>
-      resolveCSPineGroups($el, CSPine.config.groups || [])
+    Alpine.magic(
+      "_",
+      (
+        $el,
+        { evaluate, evaluateLater, effect, cleanup, Alpine, interceptor }
+      ) =>
+        resolveCSPineGroups(
+          $el,
+          CSPine.config.groups || [],
+          {
+            Alpine,
+            evaluate,
+            evaluateLater,
+            effect,
+            cleanup,
+            interceptor,
+          },
+          CSPine.config
+        )
     );
 
     Alpine.directive(
@@ -59,8 +85,6 @@ const CSPine: CSPine = {
               val = resolveData({ case: val, cast }, "switch", "case", true);
               (tpl as any).style.display =
                 item === val ? "inline-block" : "none";
-
-              console.log(val);
             });
           });
         });

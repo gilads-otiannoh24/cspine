@@ -1,18 +1,22 @@
-import { accessVariable } from "@/utils/accessVariable";
+import { MagicUtilitiesWithContext } from "@/CSPine";
 import { resolveData } from "@/utils/resolveDatasetValue";
 import { useContext } from "@/utils/useContext";
-import { AlpineComponent } from "alpinejs";
 
 export function greaterThanOrEqual(
   el: HTMLElement,
-  alpine: AlpineComponent<any>
+  options: MagicUtilitiesWithContext
 ) {
-  const ctx = useContext(alpine, alpine, "greaterThan", "var", true);
+  const ctx = useContext(el, "greaterThan", "var", true);
 
-  const variable = accessVariable(ctx.cp, ctx.varName);
+  const variable = options.evaluate(ctx.varName);
   const value = resolveData(ctx.dataset, ctx.fn, "value", true);
 
-  if (variable === undefined || value === undefined) {
+  if (
+    variable === undefined ||
+    value === undefined ||
+    variable === null ||
+    value === null
+  ) {
     return false;
   }
 

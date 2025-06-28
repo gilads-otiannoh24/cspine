@@ -1,11 +1,11 @@
+import { MagicUtilitiesWithContext } from "@/CSPine";
 import { accessVariable } from "@/utils/accessVariable";
 import { useContext } from "@/utils/useContext";
-import { AlpineComponent } from "alpinejs";
 
-export function toggle(el: HTMLElement, alpine: AlpineComponent<any>) {
-  const ctx = useContext(alpine, alpine, "toggle", "var", true);
+export function toggle(el: HTMLElement, options: MagicUtilitiesWithContext) {
+  const ctx = useContext(el, "toggle", "var", true);
 
-  const cp = ctx.cp;
+  const cp = options.this;
 
   const varName = ctx.varName;
   const variable = accessVariable(cp, varName);

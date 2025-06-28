@@ -1,11 +1,12 @@
+import { MagicUtilitiesWithContext } from "@/CSPine";
 import { accessVariable } from "@/utils/accessVariable";
 import { useContext } from "@/utils/useContext";
-import { AlpineComponent } from "alpinejs";
+import { AlpineComponent, MagicUtilities } from "alpinejs";
 
-export function truthy(el: HTMLElement, alpine: AlpineComponent<any>) {
-  const ctx = useContext(alpine, alpine, "isTrue", "var", true);
+export function truthy(el: HTMLElement, options: MagicUtilitiesWithContext) {
+  const ctx = useContext(el, "isTrue", "var", true);
 
-  const cp = ctx.cp;
+  const cp = options.this;
 
   const varName = ctx.varName;
   const variable = accessVariable(cp, varName);

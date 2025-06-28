@@ -1,9 +1,8 @@
-import CSPine, { CSPineGroup } from "@/CSPine";
+import CSPine from "@/CSPine";
 import Alpine from "@alpinejs/csp";
-import { AlpineComponent, InferInterceptors } from "alpinejs";
+import { AlpineComponent, evaluate, InferInterceptors } from "alpinejs";
 import { domUpdate } from "./delay";
-import state from "@/groups/states";
-import { bool } from "@/groups/bool";
+import { bool, state } from "@/groups";
 
 export type Stack<T> = {
   set: InferInterceptors<T>;
@@ -20,10 +19,7 @@ export async function setupDom(
 
   Alpine.data("TestData", testData ?? ((): AlpineComponent<any> => ({})));
 
-  CSPine.config = {
-    functions: [],
-    groups: [state, bool],
-  };
+  CSPine.config.groups = [state, bool];
 
   Alpine.plugin(CSPine.plugin);
 

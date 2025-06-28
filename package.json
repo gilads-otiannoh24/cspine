@@ -16,10 +16,10 @@
       "require": "./dist/module.js",
       "types": "./dist/types/src/CSPine.d.ts"
     },
-    "./utils": {
-      "import": "./dist/utils.mjs",
-      "require": "./dist/utils.js",
-      "types": "./dist/types/src/index.d.ts"
+    "./groups": {
+      "import": "./dist/groups.mjs",
+      "require": "./dist/groups.js",
+      "types": "./dist/types/src/groups/index.d.ts"
     }
   },
   "author": "Ian Ochieng",
@@ -48,6 +48,8 @@
     "@types/lodash": "^4.17.17",
     "jsdom": "^26.1.0",
     "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
     "vitest": "^3.2.3",
     "webpack-cli": "^6.0.1"
   },

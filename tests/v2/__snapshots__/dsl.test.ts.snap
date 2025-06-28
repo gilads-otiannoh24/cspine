@@ -1,0 +1,279 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tokenizer > should tokenize basic set command with literal 1`] = `
+[
+  {
+    "type": "command",
+    "value": "set",
+  },
+  {
+    "type": "reference",
+    "value": "x",
+  },
+  {
+    "type": "arrow",
+  },
+  {
+    "type": "literal",
+    "value": "10",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should tokenize booleans and casts 1`] = `
+[
+  {
+    "type": "command",
+    "value": "set",
+  },
+  {
+    "type": "reference",
+    "value": "ready",
+  },
+  {
+    "type": "arrow",
+  },
+  {
+    "type": "literal",
+    "value": "true",
+  },
+  {
+    "type": "cast",
+    "value": "bool",
+  },
+  {
+    "type": "semicolon",
+  },
+  {
+    "type": "command",
+    "value": "set",
+  },
+  {
+    "type": "reference",
+    "value": "flag",
+  },
+  {
+    "type": "arrow",
+  },
+  {
+    "type": "literal",
+    "value": "false",
+  },
+  {
+    "type": "cast",
+    "value": "bool",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should tokenize casted literals and references 1`] = `
+[
+  {
+    "type": "command",
+    "value": "set",
+  },
+  {
+    "type": "reference",
+    "value": "x",
+  },
+  {
+    "type": "arrow",
+  },
+  {
+    "type": "literal",
+    "value": "45",
+  },
+  {
+    "type": "cast",
+    "value": "number",
+  },
+  {
+    "type": "semicolon",
+  },
+  {
+    "type": "command",
+    "value": "set",
+  },
+  {
+    "type": "reference",
+    "value": "y",
+  },
+  {
+    "type": "arrow",
+  },
+  {
+    "type": "reference",
+    "value": "user.id",
+  },
+  {
+    "type": "cast",
+    "value": "string",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should tokenize function call with mixed arguments 1`] = `
+[
+  {
+    "type": "reference",
+    "value": "alert",
+  },
+  {
+    "type": "paren_open",
+  },
+  {
+    "type": "literal",
+    "value": "Welcome",
+  },
+  {
+    "type": "cast",
+    "value": "string",
+  },
+  {
+    "type": "comma",
+  },
+  {
+    "type": "reference",
+    "value": "user.id",
+  },
+  {
+    "type": "cast",
+    "value": "string",
+  },
+  {
+    "type": "comma",
+  },
+  {
+    "type": "literal",
+    "value": "3000",
+  },
+  {
+    "type": "cast",
+    "value": "number",
+  },
+  {
+    "type": "paren_close",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should tokenize multiple calls separated by semicolon 1`] = `
+[
+  {
+    "type": "reference",
+    "value": "show",
+  },
+  {
+    "type": "paren_open",
+  },
+  {
+    "type": "literal",
+    "value": "Saved!",
+  },
+  {
+    "type": "cast",
+    "value": "string",
+  },
+  {
+    "type": "paren_close",
+  },
+  {
+    "type": "semicolon",
+  },
+  {
+    "type": "reference",
+    "value": "refresh",
+  },
+  {
+    "type": "paren_open",
+  },
+  {
+    "type": "paren_close",
+  },
+  {
+    "type": "semicolon",
+  },
+  {
+    "type": "reference",
+    "value": "log",
+  },
+  {
+    "type": "paren_open",
+  },
+  {
+    "type": "literal",
+    "value": "done",
+  },
+  {
+    "type": "cast",
+    "value": "string",
+  },
+  {
+    "type": "paren_close",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should tokenize reference chaining with @scope 1`] = `
+[
+  {
+    "type": "reference",
+    "value": "set",
+  },
+  {
+    "type": "reference",
+    "value": "this.user.age",
+  },
+  {
+    "type": "arrow",
+  },
+  {
+    "type": "literal",
+    "value": "30",
+  },
+  {
+    "type": "cast",
+    "value": "number",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should tokenize simple function call with no cast 1`] = `
+[
+  {
+    "type": "reference",
+    "value": "log",
+  },
+  {
+    "type": "paren_open",
+  },
+  {
+    "type": "literal",
+    "value": "debug",
+  },
+  {
+    "type": "paren_close",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;

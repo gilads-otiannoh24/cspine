@@ -36,7 +36,7 @@ const cdnBuild = {
 const esmBuild = {
   entry: {
     module: "./src/CSPine.ts",
-    utils: "./src/index.ts",
+    groups: "./src/index.ts",
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -55,7 +55,7 @@ const esmBuild = {
 const cjsBuild = {
   entry: {
     module: "./src/CSPine.ts",
-    utils: "./src/index.ts",
+    groups: "./src/index.ts",
   },
   output: {
     path: path.resolve(__dirname, "dist"),

@@ -1,12 +1,12 @@
+import { MagicUtilitiesWithContext } from "@/CSPine";
 import { accessVariable } from "@/utils/accessVariable";
 import { resolveData } from "@/utils/resolveDatasetValue";
 import { useContext } from "@/utils/useContext";
-import { AlpineComponent } from "alpinejs";
 
-export function set(el: HTMLElement, alpine: AlpineComponent<any>) {
-  const ctx = useContext(alpine, alpine, "set");
+export function set(el: HTMLElement, options: MagicUtilitiesWithContext) {
+  const ctx = useContext(el, "set", "var");
 
-  const cp = ctx.cp;
+  const cp = options.this;
 
   const varName = ctx.varName;
   const value = resolveData(ctx.dataset, ctx.fn, "value");

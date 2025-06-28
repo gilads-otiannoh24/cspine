@@ -3,14 +3,12 @@ import { getAlpineInstance } from "./getAlpineInstance";
 import { resolveData } from "./resolveDatasetValue";
 
 export function useContext(
-  ctx: AlpineComponent<any>,
-  alp: AlpineComponent<any>,
+  el: HTMLElement,
   fn: string,
   datasetKey: string = "var",
   singleRecord?: boolean
 ) {
-  const cp = getAlpineInstance(ctx, alp);
-  const dataset = ctx.$el.dataset;
+  const dataset = el.dataset;
   let varName = resolveData(dataset, fn, datasetKey);
 
   if (singleRecord !== undefined && singleRecord) {
@@ -21,5 +19,5 @@ export function useContext(
     }
   }
 
-  return { cp, varName, dataset, fn };
+  return { varName, dataset, fn };
 }

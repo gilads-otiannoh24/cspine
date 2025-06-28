@@ -1,11 +1,11 @@
+import { MagicUtilitiesWithContext } from "@/CSPine";
 import { accessVariable } from "@/utils/accessVariable";
 import { useContext } from "@/utils/useContext";
-import { AlpineComponent } from "alpinejs";
 
-export function reset(el: HTMLElement, alpine: AlpineComponent<any>) {
-  const ctx = useContext(alpine, alpine, "reset", "var", true);
+export function reset(el: HTMLElement, options: MagicUtilitiesWithContext) {
+  const ctx = useContext(el, "reset", "var", true);
 
-  const cp = ctx.cp;
+  const cp = options.this;
 
   let varName = ctx.varName;
 

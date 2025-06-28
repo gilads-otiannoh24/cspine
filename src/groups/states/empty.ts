@@ -1,12 +1,13 @@
-import { accessVariable } from "@/utils/accessVariable";
+import { MagicUtilitiesWithContext } from "@/CSPine";
 import { useContext } from "@/utils/useContext";
-import { AlpineComponent } from "alpinejs";
 
-export function empty(el: HTMLElement, alpine: AlpineComponent<any>) {
-  const ctx = useContext(alpine, alpine, "empty", "var", true);
+export function empty(el: HTMLElement, options: MagicUtilitiesWithContext) {
+  const ctx = useContext(el, "empty", "var", true);
 
   const varName = ctx.varName;
-  const variable = accessVariable(ctx.cp, varName);
+  const variable = options.evaluate(varName);
+
+  if (variable === null || variable === undefined) return true;
 
   if (typeof variable === "string") return variable === "";
   else if (typeof variable === "object")

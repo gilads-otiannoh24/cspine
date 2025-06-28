@@ -140,6 +140,20 @@
         <button data-var="show" @click="$_.util.log">Log</button>
 
         <button data-var="bg" @click="$_.bool.toggle">toggle Bg</button>
+
+        <h2>Call with evaluate</h2>
+
+        <button
+          data-var="emptyString"
+          data-call="$_.state.reset"
+          @click="$_.util.call"
+        >
+          Set empty string
+        </button>
+
+        <div data-var="emptyString" x-show="$_.state.empty">
+          Am an empty string, object or array
+        </div>
       </div>
     </div>
 

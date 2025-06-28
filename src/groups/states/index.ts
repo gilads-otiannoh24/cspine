@@ -1,7 +1,7 @@
 import { getAlpineInstance } from "@/utils/getAlpineInstance";
-import { AlpineComponent } from "alpinejs";
+import Alpine, { AlpineComponent } from "alpinejs";
 import { set } from "./set";
-import { CSPineUtil } from "@/CSPine";
+import { Config, CSPineUtil } from "@/CSPine";
 import { inc } from "./inc";
 import { dec } from "./dec";
 import { empty } from "./empty";
@@ -31,58 +31,62 @@ export interface StateUtils {
   lessThanOrEqual(alpine?: AlpineComponent<any>): boolean;
 }
 
-export default function state($el: HTMLElement): CSPineUtil<StateUtils> {
+export function state(
+  $el: HTMLElement,
+  options: Alpine.MagicUtilities,
+  config: Config
+): CSPineUtil<StateUtils> {
   return {
     set(alpine) {
-      set($el, getAlpineInstance(this, alpine));
+      set($el, { ...options, this: this });
     },
 
     inc(alpine) {
-      inc($el, getAlpineInstance(this, alpine));
+      inc($el, { ...options, this: this });
     },
 
     dec(alpine) {
-      dec($el, getAlpineInstance(this, alpine));
+      dec($el, { ...options, this: this });
     },
 
     empty(alpine) {
-      return empty($el, getAlpineInstance(this, alpine));
+      return empty($el, { ...options, this: this });
     },
 
     reset(alpine) {
-      reset($el, getAlpineInstance(this, alpine));
+      reset($el, { ...options, this: this });
     },
 
     not(alpine) {
-      return not($el, getAlpineInstance(this, alpine));
+      return not($el, { ...options, this: this });
     },
 
     type(alpine) {
-      return type($el, getAlpineInstance(this, alpine));
+      return type($el, { ...options, this: this });
     },
 
     equals(alpine) {
-      return equals($el, getAlpineInstance(this, alpine));
+      return equals($el, { ...options, this: this });
     },
 
     notEquals(alpine) {
-      return notEquals($el, getAlpineInstance(this, alpine));
+      return notEquals($el, { ...options, this: this });
     },
 
     greaterThan(alpine) {
-      return greaterThan($el, getAlpineInstance(this, alpine));
+      return greaterThan($el, { ...options, this: this });
     },
 
     lessThan(alpine) {
-      return lessThan($el, getAlpineInstance(this, alpine));
+      return lessThan($el, { ...options, this: this });
     },
 
     greaterThanOrEqual(alpine) {
-      return greaterThanOrEqual($el, getAlpineInstance(this, alpine));
+      return greaterThanOrEqual($el, { ...options, this: this });
     },
 
     lessThanOrEqual(alpine) {
-      return lessThanOrEqual($el, getAlpineInstance(this, alpine));
+      return lessThanOrEqual($el, { ...options, this: this });
     },
 
     $config: {

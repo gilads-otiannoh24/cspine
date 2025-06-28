@@ -1,17 +1,17 @@
-import { accessVariable } from "@/utils/accessVariable";
+import { MagicUtilitiesWithContext } from "@/CSPine";
+import { setVariable } from "@/utils/accessVariable";
 import { useContext } from "@/utils/useContext";
-import { AlpineComponent } from "alpinejs";
+import { MagicUtilities } from "alpinejs";
 
-export function dec(el: HTMLElement, alpine: AlpineComponent<any>) {
-  const ctx = useContext(alpine, alpine, "dec", "var", true);
-
-  const cp = ctx.cp;
+export function dec(el: HTMLElement, options: MagicUtilitiesWithContext) {
+  const ctx = useContext(el, "dec", "var", true);
 
   const varName = ctx.varName;
-  let variable = accessVariable(cp, varName);
+  let variable = options.evaluate(varName);
+  const cp = options.this;
 
   if (typeof variable === "number") {
-    accessVariable(cp, varName, "set", --variable);
+    setVariable(cp, varName, --variable);
   } else {
     console.warn(
       "CSPUtils::state.dec - Variable cannot be incremented as it is not a number",

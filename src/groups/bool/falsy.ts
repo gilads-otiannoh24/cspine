@@ -1,14 +1,17 @@
+import { MagicUtilitiesWithContext } from "@/CSPine";
 import { accessVariable } from "@/utils/accessVariable";
 import { useContext } from "@/utils/useContext";
-import { AlpineComponent } from "alpinejs";
+import { AlpineComponent, MagicUtilities } from "alpinejs";
 
-export function falsy(el: HTMLElement, alpine: AlpineComponent<any>) {
-  const ctx = useContext(alpine, alpine, "isFalse", "var", true);
+export function falsy(el: HTMLElement, options: MagicUtilitiesWithContext) {
+  const ctx = useContext(el, "isFalse", "var", true);
 
-  const cp = ctx.cp;
+  const cp = options.this;
 
   const varName = ctx.varName;
   const variable = accessVariable(cp, varName);
+
+  console.log("CSPUtils::bool.isFalse - Variable:", variable);
 
   if (typeof variable === "boolean") {
     return variable === false;

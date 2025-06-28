@@ -1,0 +1,9 @@
+Am thinking of a new parser where for functions that require input(basically setting and call functions), we can have the parser 
+recognise theme and have inputs inside a single dataset like this
+
+data-var="set:user.age->45(number)"
+
+So for this we can pass in the value to be uset to that variable and also pass the cast which eleminates the need 
+for using dataset like data-value and data-cast making the html less cluttered.
+
+What do you think?
