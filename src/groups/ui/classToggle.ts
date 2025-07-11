@@ -13,5 +13,11 @@ export function classToggle(el: HTMLElement, options: Options): string {
   const classTrue = ctx.parsed.commandArgs.positional[0] || "";
   const classFalse = ctx.parsed.commandArgs.positional[1] || "";
 
+  if (node.target) {
+    return options.evaluate(node.reference as string) === node.target.value
+      ? classTrue
+      : classFalse;
+  }
+
   return options.evaluate(node.reference as string) ? classTrue : classFalse;
 }

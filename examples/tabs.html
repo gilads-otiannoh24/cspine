@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSPine Tabs</title>
+
+    <script
+      src="https://unpkg.com/@gilads-otiannoh24/cspine@latest/dist/cdn.min.js"
+      type="module"
+    ></script>
+
+    <!-- Ensure to include Alpine.js csp build -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@alpinejs/csp@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura.css"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <div x-data="Tabs">
+      <div>
+        <button data-cspine="set:tab->1(number)" @click="$_.state.set">
+          Tab 1
+        </button>
+        <button data-cspine="set:tab->2(number)" @click="$_.state.set">
+          Tab 2
+        </button>
+        <button data-cspine="set:tab->3(number)" @click="$_.state.set">
+          Tab 3
+        </button>
+      </div>
+
+      <div data-cspine="equals:tab->1(number)" x-show="$_.state.equals">
+        Tab 1 contents
+      </div>
+      <div data-cspine="equals:tab->2(number)" x-show="$_.state.equals">
+        Tab 2 contents
+      </div>
+      <div data-cspine="equals:tab->3(number)" x-show="$_.state.equals">
+        Tab 3 contents
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("alpine:init", () => {
+        Alpine.data("Tabs", () => ({ tab: 1 }));
+      });
+    </script>
+  </body>
+</html>

@@ -116,7 +116,7 @@ export function tokenize(input: string, log: boolean = false): Token[] {
       else if (text === "|") {
         tokens.push({ type: "pipe" });
 
-        const argText = input.slice(regex.lastIndex).trimStart();
+        const argText = seg.slice(regex.lastIndex).trimStart();
         const endOfArgs = argText.search(/[;]/);
         const argsBlock =
           endOfArgs === -1 ? argText : argText.slice(0, endOfArgs);

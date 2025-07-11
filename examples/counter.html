@@ -6,7 +6,7 @@
     <title>Document</title>
 
     <script
-      src="https://unpkg.com/@gilads-otiannoh24/cspine@0.0.4/dist/cdn.min.js"
+      src="https://unpkg.com/@gilads-otiannoh24/cspine@latest/dist/cdn.min.js"
       type="module"
     ></script>
 
@@ -24,11 +24,11 @@
   </head>
   <body>
     <div x-data="Counter">
-      <h2>CSPine counter implemenetation</h2>
+      <h2>CSPine counter</h2>
       <p x-text="count"></p>
 
-      <button @click="$_.state.dec" data-var="count">-</button>
-      <button @click="$_.state.inc" data-var="count">+</button>
+      <button @click="$_.state.dec" data-cspine="dec:count">-</button>
+      <button @click="$_.state.inc" data-cspine="inc:count">+</button>
     </div>
 
     <script>

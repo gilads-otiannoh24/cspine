@@ -1,4 +1,5 @@
 import { parse } from "@/v2/dsl/parse";
+import { escape } from "lodash";
 import { describe, expect, it } from "vitest";
 
 describe("AST Builder - normal mode", () => {
@@ -159,6 +160,48 @@ describe("AST Builder - normal mode", () => {
           cast: "number",
           type: "literal",
         },
+        commandArgs: {
+          positional: [],
+          named: {},
+        },
+        type: "normal",
+      },
+    ]);
+  });
+
+  it("should parse command specific arguments from any command independent of position in text", () => {
+    const ast = parse(
+      `toggle:toggleClass;classtoggle:toggleclass|'success','warning',value='foo';log:$_.ui.classToggle`
+    );
+
+    expect(ast).toEqual([
+      {
+        command: "toggle",
+        reference: "toggleClass",
+        target: null,
+        commandArgs: {
+          positional: [],
+          named: {},
+        },
+        type: "normal",
+      },
+
+      {
+        command: "classtoggle",
+        reference: "toggleclass",
+        target: null,
+        commandArgs: {
+          positional: ["success", "warning"],
+          named: {
+            value: { value: "foo", escaped: false, escapedValue: null },
+          },
+        },
+        type: "normal",
+      },
+      {
+        command: "log",
+        reference: "$_.ui.classToggle",
+        target: null,
         commandArgs: {
           positional: [],
           named: {},

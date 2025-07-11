@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script
+      src="https://unpkg.com/@gilads-otiannoh24/cspine@latest/dist/cdn.min.js"
+      type="module"
+    ></script>
+
+    <!-- Ensure to include Alpine.js csp build -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/@alpinejs/csp@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!--  <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sakura.css/css/sakura.css"
+      type="text/css"
+    /> -->
+
+    <style>
+      .grey {
+        background-color: #d5d5d5;
+      }
+      .success {
+        background-color: #3f51b5;
+      }
+      .error {
+        background-color: #ff3b3f;
+      }
+      .warning {
+        background-color: #ff9800;
+      }
+
+      .white {
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body class="grey">
+    <div x-data="ClassToggle">
+      <h2>Class Toggle</h2>
+      <div>
+        <button
+          :class="$_.ui.classToggle"
+          data-cspine="toggle:toggleClass;classToggle:toggleClass|'success','warning';log:$_.ui.classToggle"
+          @click="$_.bool.toggle"
+          x-init="$_.util.log"
+        >
+          Toggle Background color
+        </button>
+      </div>
+
+      <h2>Class Object - Set status</h2>
+      <div>
+        <p>Use these buttons to set the status</p>
+        <div>
+          <button
+            class="success white"
+            data-cspine="set:status->'active'"
+            @click="$_.state.set"
+          >
+            Active
+          </button>
+          <button
+            class="warning"
+            data-cspine="set:status->'pending'"
+            @click="$_.state.set"
+          >
+            Pending
+          </button>
+          <button
+            class="error white"
+            data-cspine="set:status->'inactive'"
+            @click="$_.state.set"
+          >
+            Inactive
+          </button>
+        </div>
+
+        <h4>Current status</h4>
+        <button
+          class="white"
+          :class="$_.ui.class"
+          data-cspine="class:status|active='success',inactive='error',pending='warning';"
+          x-text="status"
+        ></button>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("alpine:init", () => {
+        Alpine.data("ClassToggle", () => ({
+          toggleClass: true,
+
+          status: "active", // or "inactive", "pending", etc.
+        }));
+      });
+    </script>
+  </body>
+</html>
