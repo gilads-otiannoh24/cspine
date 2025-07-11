@@ -1,17 +1,18 @@
-import Alpine, {
+import {
   Alpine as AlpineGlobal,
   InferInterceptors,
   MagicUtilities,
 } from "alpinejs";
-import { resolveData } from "./utils/resolveDatasetValue";
 import { resolveCSPineGroups } from "./utils/resolveCSPineGroups";
 
 export interface CSPineUtils {
   [key: string]: CSPineUtil<any>;
 }
 
-export type MagicUtilitiesWithContext = Alpine.MagicUtilities & {
+export type Options = MagicUtilities & {
   this: ThisType<any>;
+  e?: Event;
+  config: Config;
 };
 
 export type CSPineGroup = (
@@ -70,9 +71,13 @@ const CSPine: CSPine = {
         )
     );
 
-    Alpine.directive(
+    /* Alpine.directive(
       "switch",
-      ($el, { expression }, { evaluateLater, effect }) => {
+      (
+        $el,
+        { expression },
+        { evaluate, evaluateLater, effect, cleanup, Alpine }
+      ) => {
         const switchItem = evaluateLater(expression);
 
         effect(() => {
@@ -82,14 +87,27 @@ const CSPine: CSPine = {
               const cast =
                 $el.dataset.cast || tpl.getAttribute("data-cast") || "";
 
-              val = resolveData({ case: val, cast }, "switch", "case", true);
+              val = resolveData(
+                { case: val, cast },
+                "switch",
+                "case",
+                {
+                  Alpine,
+                  evaluate,
+                  evaluateLater,
+                  effect,
+                  cleanup,
+                  this: this,
+                },
+                true
+              );
               (tpl as any).style.display =
                 item === val ? "inline-block" : "none";
             });
           });
         });
       }
-    );
+    ); */
   },
 };
 

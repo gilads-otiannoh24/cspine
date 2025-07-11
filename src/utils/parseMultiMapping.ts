@@ -1,5 +1,8 @@
+import { Options } from "@/CSPine";
+
 export function parseMultiMapping(
-  input: string
+  input: string,
+  options?: Partial<Options>
 ): Record<string, Record<string, string | string[]>> {
   const result: Record<string, Record<string, string | string[]>> = {};
   const sections = input.split(";");

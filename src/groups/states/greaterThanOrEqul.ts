@@ -1,16 +1,20 @@
-import { MagicUtilitiesWithContext } from "@/CSPine";
-import { resolveData } from "@/utils/resolveDatasetValue";
+import { Options } from "@/CSPine";
+import { warnEmptyNode } from "@/utils/issueWarning";
 import { useContext } from "@/utils/useContext";
 
-export function greaterThanOrEqual(
-  el: HTMLElement,
-  options: MagicUtilitiesWithContext
-) {
-  const ctx = useContext(el, "greaterThan", "var", true);
+export function greaterThanOrEqual(el: HTMLElement, options: Options) {
+  const ctx = useContext(el, "greaterThanOrEqual", options, true);
 
-  const variable = options.evaluate(ctx.varName);
-  const value = resolveData(ctx.dataset, ctx.fn, "value", true);
+  const node = ctx.parsed;
 
+  if (!node) {
+    warnEmptyNode(ctx.fn, "state", el);
+    return false;
+  }
+
+  const varName = node.reference as string;
+  const variable = options.evaluate(varName);
+  const value = node.target?.value;
   if (
     variable === undefined ||
     value === undefined ||

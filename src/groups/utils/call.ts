@@ -1,26 +1,23 @@
-import { MagicUtilitiesWithContext } from "@/CSPine";
-import { callLodash } from "@/utils/callLodash";
-import { handleOperators } from "@/utils/handleOperators";
-import { resolveData } from "@/utils/resolveDatasetValue";
+import { Options } from "@/CSPine";
+import { warnEmptyNode } from "@/utils/issueWarning";
+import { parseNode } from "@/utils/parseNode";
 import { useContext } from "@/utils/useContext";
+import { ASTNode } from "@/v2/dsl/types";
 
-export function call(el: HTMLElement, options: MagicUtilitiesWithContext) {
-  const ctx = useContext(el, "call", "call", true);
+export function call(el: HTMLElement, options: Options) {
+  const ctx = useContext(el, { fn: "call", group: "util" }, options);
+  const nodes = ctx.nodes;
 
-  const fnNames = (ctx.varName as string).split("->");
-  const type = resolveData(ctx.dataset, ctx.fn, "type", true);
+  if (!nodes) {
+    warnEmptyNode(ctx.fn, ctx.group, el);
+    return;
+  }
 
-  const results: any[] = [];
-  fnNames.forEach((fnWithArgs) => {
-    const fnName = fnWithArgs.split("~")[0] || "";
-    const args = fnWithArgs.split("~")[1]?.split(",") || ([] as string[]);
+  (nodes as ASTNode[]).forEach((node) => {
+    const parsed = parseNode(node, options);
 
-    if (type && type === "lodash") {
-      results.push(callLodash(fnName, args));
-    }
-
-    results.push(options.evaluate(fnName));
+    options.evaluate(parsed?.name as string, {
+      params: parsed?.args?.map((a) => a.value),
+    });
   });
-
-  return handleOperators(el, results);
 }

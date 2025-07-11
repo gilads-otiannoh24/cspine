@@ -1,30 +1,36 @@
-# 🦴 CSPine — CSP-Safe Utilities for Alpine.js
+# CSPine v2 🧠✨
 
-**CSPine** is a feature-rich utility plugin for Alpine.js that brings powerful, expressive behavior to your HTML without violating Content Security Policy (CSP) rules.
-
-> ✨ Declarative. 🔐 Secure. ⚡ Lightweight (~20–30KB when fully built).
+> **Composable State & Behavior Management for Alpine.js (CSP Build Ready)**  
+> Write compact, expressive logic with a DSL that works in CSP-restricted environments.
 
 ---
 
 ## 🚀 Why CSPine?
 
-Alpine is awesome, but writing inline JavaScript breaks CSP. CSPine solves this by introducing a declarative, attribute-driven syntax you can use safely — no inline scripts required.
+When using Alpine.js in a CSP-restricted environment (e.g., with strict Content Security Policies), you must switch to the CSP build — which means removing all inline JavaScript from your HTML. While this enforces security, it also takes away the elegance and simplicity Alpine is known for.
 
-Example:
+CSPine bridges that gap.
+It restores the declarative power of Alpine's normal build by introducing a clean, expressive DSL that works entirely within Alpine's CSP-safe environment — without bloating your JavaScript code or repeating the same logic across components.
 
-```html
-<button data-var="count" @click="$_.state.inc">+</button>
-<span x-text="count"></span>
-```
+🔹 Write less, do more
+🔹 Avoid repetition and bulky JavaScript functions
+🔹 Maintain clean and maintainable templates
+🔹 Enhance Alpine’s power with structured, testable expressions
 
-No x-on:click="count++" needed. CSPine handles the logic internally.
-Secure and maintainable.
+✅ What CSPine brings to the table
+✅ CSP-friendly by design
+✅ Tiny DSL with casting, expressions & arguments
+✅ Function reuse through groups ($_.state.set, $_.ui.classToggle, etc.)
+✅ Cleaner code: fewer JS functions in your Alpine.data()
+✅ Built for real-world Alpine CSP use cases
 
 ---
 
-## 🔧 Installation
+## 📦 Installation
 
 Using cdn:
+
+<!-- TODO Update cdn link -->
 
 ```html Copy Edit
 <script
@@ -41,13 +47,13 @@ Using cdn:
 
 Or via npm (soon):
 
-```bash Copy Edit
+```bash
 npm i @gilads-otiannoh24/cspine
 ```
 
 Then in your Alpine bootfile:
 
-```js Copy Edit
+```js
 import Alpine from "@alpinejs/csp";
 import CSPine from "@gilads-otiannoh24/cspine";
 
@@ -59,59 +65,170 @@ Alpine.plugin(CSPine.plugin);
 Alpine.start();
 ```
 
----
-
-## 🧩 Features
-
-| Category       | Functions                                           |
-| -------------- | --------------------------------------------------- |
-| 📊 **State**   | `inc`, `dec`, `toggle`, `reset`                     |
-| 🧠 **Logic**   | `call`, `bindTo`, `switch`                          |
-| 🎛️ **UI**      | `classToggle`, `styleSet`, `showIf` _(coming soon)_ |
-| 📦 **Storage** | `persist`, `loadFrom` _(coming soon)_               |
-
-Each function uses a data-\* or CSP-safe @event format like: html Copy Edit
+Example(v2)
 
 ```html
-<button data-call="submitForm"></button>
+<!-- Set 'flag' to true on click -->
+<div data-cspine="set:flag->true(bool)" @click="$_state.set"></div>
+
+<!-- Alert with arguments -->
+<div
+  data-cspine='alert("Hello!"(string), $store.user.name(string), 3000(number))'
+></div>
+
+<!-- Command-specific arguments -->
+<div
+  data-cspine="set:ready->true(bool)|event='mouseover'; set:flag->false(bool)|event='click'"
+></div>
 ```
 
-### ✅ Example
+---
 
-Here is a simple counter implementation with CSPine:
+:
 
-```html Copy Edit
-<div x-data="Counter">
-  <button @click="$_.state.inc" data-var="count">+</button>
-  <button @click="$_.state.dec" data-var="count">-</button>
-  <p x-text="count"></p>
-</div>
+## 🧩 Internal Structure of CSPine
 
-<script>
-  document.addEventListener("alpine:init", () => {
-    Alpine.data("Counter", () => ({ count: 0 }));
-  });
-</script>
+CSPine is designed to minimize JavaScript repetition and maximize reusability across Alpine.js components in CSP environments.
+
+### 🔧 Utility Groups
+
+Internally, CSPine organizes its logic into utility groups, each focused on a category of common tasks you'd normally have to implement manually within every Alpine.data() object.
+
+Each group exposes pure utility functions via the special Alpine Magic helper $\_, allowing you to call them like:
+
+```html
+@click="$_.state.set"
 ```
 
-## 🧪 Tested & Trusted
+### 🔹 Example Utility Groups
 
-CSPine is tested using Vitest + jsdom with full support for
-CSP builds (@alpinejs/csp). Test coverage is designed to simulate real-world DOM
-updates without violating CSP headers.
+| Group   | Purpose                                              |
+| ------- | ---------------------------------------------------- |
+| `state` | Manage data state (`set`, `not`, `reset`, etc.)      |
+| `ui`    | UI manipulation (`classToggle`, `class`, etc.)       |
+| `bool`  | Manages boolean values (`truthy`, `falsy`, `toggle`) |
 
-## 📦 Bundle Size
+You can invoke any function using the DSL, and pass in arguments via your HTML using the data-cspine attribute:
 
-CSPine is modular. Import
-only what you need — full build stays under 30KB when gzipped. Much smaller than
-rewriting utility JS for every project.
+```html
+<div data-cspine="set:isOpen->true(bool)"></div>
+```
 
-## 💬 Community & Feedback
+### 🔒 Why This Matters
 
-CSPine is in early development. Feedback, ideas, and contributions are very welcome! 🐛 Found
-a bug? 🧠 Want to suggest a new function? 🛠️ Interested in contributing? Open an
-issue or pull request on GitHub.
+Because Alpine’s CSP build disallows inline expressions, you'd usually end up moving every little piece of logic into the component definition. This is repetitive, hard to test, and defeats the simplicity Alpine is known for.
 
-## 📄 License
+CSPine avoids this problem by:
 
-MIT © 2025 [gilads-otiannoh24]
+> Encapsulating logic in reusable, grouped functions.
+
+> Letting you declaratively invoke logic via the DSL.
+
+> Minimizing custom Alpine.data() JS code.
+
+---
+
+## 🔑 Syntax Features
+
+### ✅ Core Format
+
+```txt Copy Edit
+command:target->value(cast)|positionalArg1, key1='value1', ...
+```
+
+### ✅ Examples
+
+Set a value
+
+```html
+<div data-cspine="set:isOpen->true(bool)"></div>
+```
+
+Provide cast and fallback
+
+```html
+<div data-cspine="set:count->'10'(string)|cast='number', default='0'"></div>
+```
+
+Attach multiple commands
+
+```html
+<div data-cspine="set:x->5(number); set:y->user.id(string)"></div>
+```
+
+Command with function call
+
+```html
+<div data-cspine='alert("Welcome!"(string), $store.user.email(string))'></div>
+```
+
+---
+
+## 🪄 Command-Specific Arguments (CSA)
+
+You can now pass arguments specific to a command using the pipe (|) syntax.
+
+```html
+<div
+  data-cspine="toggle:flag->true(bool)|trueClass='text-green', falseClass='text-red'"
+></div>
+```
+
+---
+
+## ✅ Reserved CSA Keywords
+
+| Keyword | Description                     |
+| ------- | ------------------------------- |
+| event   | Specify DOM event for execution |
+| cast    | Force-cast a dynamic variable   |
+| default | Fallback if resolution fails    |
+
+> 💡 **Note**: Escape reserved names with `\` if used as keys:  
+> `\event='value'`
+
+## 💡 Magic Utilities Support
+
+CSPine fully supports Alpine magic values like $store, $refs, $el, etc.
+
+```html
+<div data-cspine="log:$store.user.name"></div>
+```
+
+---
+
+## 📘 Documentation
+
+✅ Full Docs →
+
+📄 Looking for v1? Check the legacy version:
+📜 [View CSPine v1 Docs](docs/v1.md)
+
+---
+
+## 🧪 Testing
+
+CSPine is fully unit tested using Vitest.
+You can run tests with:
+
+```bash
+npm run test
+```
+
+---
+
+## 🛠️ Roadmap
+
+- [x] Full DSL v2
+- [x] Tokenizer overhaul with CSA
+- [x] AST support for calls & normal
+- [x] Reserved keyword handling
+- [ ] Visual Studio Code extension
+- [ ] Interactive playground
+- [ ] More command groups (e.g., network, form)
+
+---
+
+## 🧑‍💻 Contributing
+
+Contributions welcome! Open issues or submit PRs.

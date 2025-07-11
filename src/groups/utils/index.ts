@@ -1,12 +1,6 @@
 import { Config, CSPineUtil } from "@/CSPine";
-import { accessVariable } from "@/utils/accessVariable";
-import { callLodash } from "@/utils/callLodash";
-import { handleOperators } from "@/utils/handleOperators";
-import { resolveData } from "@/utils/resolveDatasetValue";
-import { useContext } from "@/utils/useContext";
-import { AlpineComponent, evaluate, MagicUtilities } from "alpinejs";
+import { AlpineComponent, MagicUtilities } from "alpinejs";
 import { log } from "./log";
-import { getAlpineInstance } from "@/utils/getAlpineInstance";
 import { call } from "./call";
 import { switchFn } from "./switch";
 import { bindTo } from "./bindTo";
@@ -25,19 +19,19 @@ export function util(
 ): CSPineUtil<Utils> {
   return {
     call() {
-      return call($el, { ...options, this: this });
+      return call($el, { ...options, this: this, config });
     },
 
     switch() {
-      switchFn($el, { ...options, this: this });
+      switchFn($el, { ...options, this: this, config });
     },
 
     bindTo() {
-      bindTo($el, { ...options, this: this });
+      bindTo($el, { ...options, this: this, config });
     },
 
     log() {
-      return log($el, { ...options, this: this });
+      return log($el, { ...options, this: this, config });
     },
 
     $config: {

@@ -1,5 +1,3 @@
-import { getAlpineInstance } from "@/utils/getAlpineInstance";
-import Alpine, { AlpineComponent } from "alpinejs";
 import { set } from "./set";
 import { Config, CSPineUtil } from "@/CSPine";
 import { inc } from "./inc";
@@ -14,79 +12,80 @@ import { greaterThan } from "./greaterThan";
 import { lessThan } from "./lessThan";
 import { greaterThanOrEqual } from "./greaterThanOrEqul";
 import { lessThanOrEqual } from "./lessThanOrEqual";
+import { MagicUtilities } from "alpinejs";
 
 export interface StateUtils {
-  set(alpine?: AlpineComponent<any>): void;
-  inc(alpine?: AlpineComponent<any>): void;
-  dec(alpine?: AlpineComponent<any>): void;
-  empty(alpine?: AlpineComponent<any>): boolean;
-  reset(alpine?: AlpineComponent<any>): void;
-  not(alpine?: AlpineComponent<any>): boolean;
-  type(alpine?: AlpineComponent<any>): boolean;
-  equals(alpine?: AlpineComponent<any>): boolean;
-  notEquals(alpine?: AlpineComponent<any>): boolean;
-  greaterThan(alpine?: AlpineComponent<any>): boolean;
-  lessThan(alpine?: AlpineComponent<any>): boolean;
-  greaterThanOrEqual(alpine?: AlpineComponent<any>): boolean;
-  lessThanOrEqual(alpine?: AlpineComponent<any>): boolean;
+  set(e?: Event): void;
+  inc(e?: Event): void;
+  dec(e?: Event): void;
+  empty(e?: Event): boolean;
+  reset(e?: Event): void;
+  not(e?: Event): boolean;
+  type(e?: Event): boolean;
+  equals(e?: Event): boolean;
+  notEquals(e?: Event): boolean;
+  greaterThan(e?: Event): boolean;
+  lessThan(e?: Event): boolean;
+  greaterThanOrEqual(e?: Event): boolean;
+  lessThanOrEqual(e?: Event): boolean;
 }
 
 export function state(
   $el: HTMLElement,
-  options: Alpine.MagicUtilities,
+  options: MagicUtilities,
   config: Config
 ): CSPineUtil<StateUtils> {
   return {
-    set(alpine) {
-      set($el, { ...options, this: this });
+    set(e) {
+      set($el, { ...options, this: this, e, config });
     },
 
-    inc(alpine) {
-      inc($el, { ...options, this: this });
+    inc(e) {
+      inc($el, { ...options, this: this, e, config });
     },
 
-    dec(alpine) {
-      dec($el, { ...options, this: this });
+    dec(e) {
+      dec($el, { ...options, this: this, e, config });
     },
 
-    empty(alpine) {
-      return empty($el, { ...options, this: this });
+    empty(e) {
+      return empty($el, { ...options, this: this, e, config });
     },
 
-    reset(alpine) {
-      reset($el, { ...options, this: this });
+    reset(e) {
+      reset($el, { ...options, this: this, e, config });
     },
 
-    not(alpine) {
-      return not($el, { ...options, this: this });
+    not(e) {
+      return not($el, { ...options, this: this, e, config });
     },
 
-    type(alpine) {
-      return type($el, { ...options, this: this });
+    type(e) {
+      return type($el, { ...options, this: this, e, config });
     },
 
-    equals(alpine) {
-      return equals($el, { ...options, this: this });
+    equals(e) {
+      return equals($el, { ...options, this: this, e, config });
     },
 
-    notEquals(alpine) {
-      return notEquals($el, { ...options, this: this });
+    notEquals(e) {
+      return notEquals($el, { ...options, this: this, e, config });
     },
 
-    greaterThan(alpine) {
-      return greaterThan($el, { ...options, this: this });
+    greaterThan(e) {
+      return greaterThan($el, { ...options, this: this, e, config });
     },
 
-    lessThan(alpine) {
-      return lessThan($el, { ...options, this: this });
+    lessThan(e) {
+      return lessThan($el, { ...options, this: this, e, config });
     },
 
-    greaterThanOrEqual(alpine) {
-      return greaterThanOrEqual($el, { ...options, this: this });
+    greaterThanOrEqual(e) {
+      return greaterThanOrEqual($el, { ...options, this: this, e, config });
     },
 
-    lessThanOrEqual(alpine) {
-      return lessThanOrEqual($el, { ...options, this: this });
+    lessThanOrEqual(e) {
+      return lessThanOrEqual($el, { ...options, this: this, e, config });
     },
 
     $config: {

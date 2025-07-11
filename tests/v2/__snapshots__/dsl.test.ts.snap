@@ -3,6 +3,10 @@
 exports[`Tokenizer > should tokenize basic set command with literal 1`] = `
 [
   {
+    "type": "command_type",
+    "value": "normal",
+  },
+  {
     "type": "command",
     "value": "set",
   },
@@ -18,6 +22,9 @@ exports[`Tokenizer > should tokenize basic set command with literal 1`] = `
     "value": "10",
   },
   {
+    "type": "semicolon",
+  },
+  {
     "type": "eof",
   },
 ]
@@ -25,6 +32,10 @@ exports[`Tokenizer > should tokenize basic set command with literal 1`] = `
 
 exports[`Tokenizer > should tokenize booleans and casts 1`] = `
 [
+  {
+    "type": "command_type",
+    "value": "normal",
+  },
   {
     "type": "command",
     "value": "set",
@@ -45,7 +56,24 @@ exports[`Tokenizer > should tokenize booleans and casts 1`] = `
     "value": "bool",
   },
   {
+    "type": "pipe",
+  },
+  {
+    "type": "positional_arg",
+    "value": "user",
+  },
+  {
+    "escaped": false,
+    "key": "option",
+    "type": "named_arg",
+    "value": "foo",
+  },
+  {
     "type": "semicolon",
+  },
+  {
+    "type": "command_type",
+    "value": "normal",
   },
   {
     "type": "command",
@@ -67,6 +95,9 @@ exports[`Tokenizer > should tokenize booleans and casts 1`] = `
     "value": "bool",
   },
   {
+    "type": "semicolon",
+  },
+  {
     "type": "eof",
   },
 ]
@@ -74,6 +105,10 @@ exports[`Tokenizer > should tokenize booleans and casts 1`] = `
 
 exports[`Tokenizer > should tokenize casted literals and references 1`] = `
 [
+  {
+    "type": "command_type",
+    "value": "normal",
+  },
   {
     "type": "command",
     "value": "set",
@@ -97,6 +132,10 @@ exports[`Tokenizer > should tokenize casted literals and references 1`] = `
     "type": "semicolon",
   },
   {
+    "type": "command_type",
+    "value": "normal",
+  },
+  {
     "type": "command",
     "value": "set",
   },
@@ -116,6 +155,9 @@ exports[`Tokenizer > should tokenize casted literals and references 1`] = `
     "value": "string",
   },
   {
+    "type": "semicolon",
+  },
+  {
     "type": "eof",
   },
 ]
@@ -123,6 +165,10 @@ exports[`Tokenizer > should tokenize casted literals and references 1`] = `
 
 exports[`Tokenizer > should tokenize function call with mixed arguments 1`] = `
 [
+  {
+    "type": "command_type",
+    "value": "call",
+  },
   {
     "type": "reference",
     "value": "alert",
@@ -164,6 +210,9 @@ exports[`Tokenizer > should tokenize function call with mixed arguments 1`] = `
     "type": "paren_close",
   },
   {
+    "type": "semicolon",
+  },
+  {
     "type": "eof",
   },
 ]
@@ -171,6 +220,10 @@ exports[`Tokenizer > should tokenize function call with mixed arguments 1`] = `
 
 exports[`Tokenizer > should tokenize multiple calls separated by semicolon 1`] = `
 [
+  {
+    "type": "command_type",
+    "value": "call",
+  },
   {
     "type": "reference",
     "value": "show",
@@ -193,6 +246,10 @@ exports[`Tokenizer > should tokenize multiple calls separated by semicolon 1`] =
     "type": "semicolon",
   },
   {
+    "type": "command_type",
+    "value": "call",
+  },
+  {
     "type": "reference",
     "value": "refresh",
   },
@@ -204,6 +261,10 @@ exports[`Tokenizer > should tokenize multiple calls separated by semicolon 1`] =
   },
   {
     "type": "semicolon",
+  },
+  {
+    "type": "command_type",
+    "value": "call",
   },
   {
     "type": "reference",
@@ -224,6 +285,9 @@ exports[`Tokenizer > should tokenize multiple calls separated by semicolon 1`] =
     "type": "paren_close",
   },
   {
+    "type": "semicolon",
+  },
+  {
     "type": "eof",
   },
 ]
@@ -231,6 +295,10 @@ exports[`Tokenizer > should tokenize multiple calls separated by semicolon 1`] =
 
 exports[`Tokenizer > should tokenize reference chaining with @scope 1`] = `
 [
+  {
+    "type": "command_type",
+    "value": "normal",
+  },
   {
     "type": "reference",
     "value": "set",
@@ -251,6 +319,9 @@ exports[`Tokenizer > should tokenize reference chaining with @scope 1`] = `
     "value": "number",
   },
   {
+    "type": "semicolon",
+  },
+  {
     "type": "eof",
   },
 ]
@@ -258,6 +329,10 @@ exports[`Tokenizer > should tokenize reference chaining with @scope 1`] = `
 
 exports[`Tokenizer > should tokenize simple function call with no cast 1`] = `
 [
+  {
+    "type": "command_type",
+    "value": "call",
+  },
   {
     "type": "reference",
     "value": "log",
@@ -271,6 +346,9 @@ exports[`Tokenizer > should tokenize simple function call with no cast 1`] = `
   },
   {
     "type": "paren_close",
+  },
+  {
+    "type": "semicolon",
   },
   {
     "type": "eof",

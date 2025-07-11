@@ -6,6 +6,7 @@ describe("resolveDatasetValue", () => {
     const dataset = {
       value: "fn1:1,fn2:true,fn3:name",
       cast: "value=fn1:number,fn2:boolean,fn3:string",
+      computed: "var=fn:user.age",
       var: "fn1:user.age,fn2:user.verified,fn3:user.name",
     };
 

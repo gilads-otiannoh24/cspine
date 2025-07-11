@@ -1,10 +1,11 @@
 import { Config, CSPineUtil } from "@/CSPine";
-import { AlpineComponent, MagicUtilities } from "alpinejs";
+import { MagicUtilities } from "alpinejs";
 import { classToggle } from "./classToggle";
-import { getAlpineInstance } from "@/utils/getAlpineInstance";
+import { classes } from "./class";
 
 export interface UiUtils {
-  classToggle(alpine: AlpineComponent<any>): string;
+  classToggle(e: Event): string;
+  class(e: Event): string;
 }
 
 export function ui(
@@ -13,8 +14,12 @@ export function ui(
   config: Config
 ): CSPineUtil<UiUtils> {
   return {
-    classToggle(alpine) {
-      return classToggle($el, { ...options, this: this });
+    classToggle(e) {
+      return classToggle($el, { ...options, this: this, e, config });
+    },
+
+    class(e) {
+      return classes($el, { ...options, this: this, e, config });
     },
 
     $config: {

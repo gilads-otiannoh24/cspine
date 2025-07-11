@@ -1,4 +1,4 @@
-export function castValue(value: string, type: string): any {
+export function castValue(value: any, type: string): any {
   switch (type.toLowerCase()) {
     case "number":
       return Number(value);
@@ -17,7 +17,7 @@ export function castValue(value: string, type: string): any {
         const parsed = JSON.parse(value);
         return Array.isArray(parsed) ? parsed : [parsed];
       } catch {
-        return value.split(",").map((item) => item.trim());
+        return value.split(",").map((item: string) => item.trim());
       }
     case "object":
       try {

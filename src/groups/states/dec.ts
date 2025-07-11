@@ -1,21 +1,27 @@
-import { MagicUtilitiesWithContext } from "@/CSPine";
+import { Options } from "@/CSPine";
 import { setVariable } from "@/utils/accessVariable";
+import { parseNode } from "@/utils/parseNode";
 import { useContext } from "@/utils/useContext";
-import { MagicUtilities } from "alpinejs";
+import { ASTNode } from "@/v2/dsl/types";
 
-export function dec(el: HTMLElement, options: MagicUtilitiesWithContext) {
-  const ctx = useContext(el, "dec", "var", true);
+export function dec(el: HTMLElement, options: Options) {
+  const ctx = useContext(el, "dec", options, true);
+  const node = ctx.nodes;
 
-  const varName = ctx.varName;
-  let variable = options.evaluate(varName);
-  const cp = options.this;
+  if (node) {
+    const parsed = parseNode(node as ASTNode, options);
+    const varName = parsed?.reference;
+    let variable = options.evaluate(varName as string);
 
-  if (typeof variable === "number") {
-    setVariable(cp, varName, --variable);
-  } else {
-    console.warn(
-      "CSPUtils::state.dec - Variable cannot be incremented as it is not a number",
-      el
-    );
+    const cp = options.this;
+
+    if (typeof variable === "number") {
+      setVariable(cp, varName as string, --variable);
+    } else {
+      console.warn(
+        "CSPUtils::state.dec - Variable cannot be incremented as it is not a number\n",
+        el
+      );
+    }
   }
 }

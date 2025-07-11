@@ -1,20 +1,17 @@
-import { MagicUtilitiesWithContext } from "@/CSPine";
-import { accessVariable } from "@/utils/accessVariable";
-import { resolveData } from "@/utils/resolveDatasetValue";
+import { Config, Options } from "@/CSPine";
+import { warnEmptyNode } from "@/utils/issueWarning";
 import { useContext } from "@/utils/useContext";
-import { MagicUtilities } from "alpinejs";
 
-export function classToggle(
-  el: HTMLElement,
-  options: MagicUtilitiesWithContext
-): string {
-  const ctx = useContext(el, "classToggle", "var", true);
-  const cp = options.this;
+export function classToggle(el: HTMLElement, options: Options): string {
+  const ctx = useContext(el, "classToggle", options, true);
+  if (!ctx.parsed) {
+    warnEmptyNode(ctx.fn, "ui", el);
+    return "";
+  }
 
-  const varName = ctx.varName;
+  const node = ctx.parsed;
+  const classTrue = ctx.parsed.commandArgs.positional[0] || "";
+  const classFalse = ctx.parsed.commandArgs.positional[1] || "";
 
-  const toggleTrue = resolveData(ctx.dataset, ctx.fn, "true", true) || "";
-  const toggleFalse = resolveData(ctx.dataset, ctx.fn, "false", true) || "";
-
-  return accessVariable(cp, varName) ? toggleTrue : toggleFalse;
+  return options.evaluate(node.reference as string) ? classTrue : classFalse;
 }

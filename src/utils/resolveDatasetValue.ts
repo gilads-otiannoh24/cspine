@@ -1,19 +1,26 @@
 import { parseNamespaced } from "./parseNamespaced";
 import { parseMultiMapping } from "./parseMultiMapping";
 import { castValue } from "./castValue";
+import { Options } from "@/CSPine";
+import { parse } from "@/v2/dsl/parse";
+import { ASTNode, NormalNode } from "@/v2/dsl/types";
 
 type Dataset = DOMStringMap;
 
 export function resolveDatasetValue(
   datasets: Dataset,
   fnName: string,
-  targetKey: string
+  targetKey: string,
+  options?: Partial<Options>
 ): any {
   const raw = datasets[targetKey] || "";
   const castsRaw = datasets.cast || "";
-  const multiCasts = parseMultiMapping(castsRaw);
+  const computedRaw = datasets.computed || "";
+  const multiCasts = parseMultiMapping(castsRaw, options);
+  const multiComputed = parseMultiMapping(computedRaw, options);
 
-  const values = parseNamespaced(raw);
+  const computed = multiComputed[targetKey] || {};
+  const values = parseNamespaced(raw, options);
   const casts = multiCasts[targetKey] || {};
 
   const value = values[fnName] ?? values["default"];
@@ -35,22 +42,38 @@ export function resolveDatasetValue(
 }
 
 export function resolveData(
-  datasets: Dataset,
-  fnName: string,
-  targetKey: string,
-  singleRecord?: boolean
-) {
-  let varName =
-    resolveDatasetValue(datasets, fnName, targetKey) ||
-    resolveDatasetValue(datasets, "default", targetKey);
+  el: HTMLElement,
+  fn: { fn: string; group: string },
+  singleRecord: boolean = false
+): ASTNode[] | ASTNode {
+  const input = el.dataset.cspine;
 
-  if (singleRecord !== undefined && singleRecord) {
-    if (Array.isArray(varName) && varName.length > 0) {
-      varName = varName[0];
-    } else if (Array.isArray(varName) && varName.length === 0) {
-      throw new Error(fnName + ": Variable is not set");
-    }
+  if (input === undefined) {
+    console.warn("CSPine: cspine dataset is undefined\n", el);
+    return [];
   }
 
-  return varName;
+  let fnName = fn.fn;
+  let group = fn.group;
+
+  const ast = parse(input);
+
+  const nodes = ast.filter((s) => {
+    if (fnName === "call" && group === "util") {
+      return s.type === "call";
+    }
+
+    const namedGroup = (s as NormalNode).commandArgs.named?.group;
+    const n = s as NormalNode;
+
+    return namedGroup
+      ? namedGroup.value === group && n.command === fnName
+      : n.command === fnName;
+  });
+
+  if (singleRecord) {
+    return nodes[0] || [];
+  }
+
+  return nodes;
 }

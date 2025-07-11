@@ -1,5 +1,8 @@
+import { Options } from "@/CSPine";
+
 export function parseNamespaced(
-  input: string
+  input: string,
+  options?: Partial<Options>
 ): Record<string, string | string[]> {
   const result: Record<string, string | string[]> = {};
   const pairs = input.split(",");

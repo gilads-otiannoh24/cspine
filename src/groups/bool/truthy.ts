@@ -1,21 +1,25 @@
-import { MagicUtilitiesWithContext } from "@/CSPine";
-import { accessVariable } from "@/utils/accessVariable";
+import { Options } from "@/CSPine";
+import { warnEmptyNode } from "@/utils/issueWarning";
 import { useContext } from "@/utils/useContext";
-import { AlpineComponent, MagicUtilities } from "alpinejs";
 
-export function truthy(el: HTMLElement, options: MagicUtilitiesWithContext) {
-  const ctx = useContext(el, "isTrue", "var", true);
+export function truthy(el: HTMLElement, options: Options) {
+  const ctx = useContext(el, "truthy", options, true);
 
-  const cp = options.this;
+  const node = ctx.parsed;
 
-  const varName = ctx.varName;
-  const variable = accessVariable(cp, varName);
+  if (!node) {
+    warnEmptyNode(ctx.fn, "bool", el);
+    return false;
+  }
+
+  const varName = node.reference as string;
+  const variable = options.evaluate(varName);
 
   if (typeof variable === "boolean") {
     return variable === true;
   } else {
     console.warn(
-      "CSPUtils::bool.isTrue - Variable cannot be toggled as it is not a boolean",
+      "CSPUtils::bool.isTrue - Variable cannot be toggled as it is not a boolean\n",
       el
     );
   }

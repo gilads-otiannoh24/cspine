@@ -1,16 +1,20 @@
-import { MagicUtilitiesWithContext } from "@/CSPine";
-import { accessVariable } from "@/utils/accessVariable";
-import { resolveData } from "@/utils/resolveDatasetValue";
+import { Options } from "@/CSPine";
+import { warnEmptyNode } from "@/utils/issueWarning";
 import { useContext } from "@/utils/useContext";
 
-export function type(el: HTMLElement, options: MagicUtilitiesWithContext) {
-  const ctx = useContext(el, "type", "var", true);
-  const cp = options.this;
+export function type(el: HTMLElement, options: Options) {
+  const ctx = useContext(el, "type", options, true);
 
-  const varName = ctx.varName;
-  const variable = accessVariable(cp, varName);
+  if (!ctx.parsed) {
+    warnEmptyNode(ctx.fn, "state", el);
+    return false;
+  }
 
-  const type = resolveData(ctx.dataset, ctx.fn, "type", true);
+  const node = ctx.parsed;
+
+  const varName = node.reference as string;
+  const variable = options.evaluate(varName);
+  const type = node.target?.value;
 
   if (type === "array") return Array.isArray(variable);
   if (type === "null") return variable === null;

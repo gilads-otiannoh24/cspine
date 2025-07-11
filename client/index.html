@@ -31,6 +31,10 @@
       .bg-blue {
         background-color: blue;
       }
+
+      .bg-default {
+        background-color: purple;
+      }
     </style>
   </head>
   <body x-data="CSPine">
@@ -40,12 +44,7 @@
           <h2>Set working example</h2>
           <div x-show="show">Am hidden by default</div>
 
-          <button
-            data-var="show"
-            data-cast="value=boolean"
-            data-value="true"
-            @click="$_.state.set"
-          >
+          <button data-cspine="set:show->true(bool)" @click="$_.state.set">
             Show
           </button>
         </div>
@@ -59,8 +58,8 @@
             only dependant on one function alone it moght not he necessary but when there is more than one you
              need to scope -->
             <div>
-              <button data-var="count" @click="$_.state.dec">-</button>
-              <button data-var="count" @click="$_.state.inc">+</button>
+              <button data-cspine="dec:count" @click="$_.state.dec">-</button>
+              <button data-cspine="inc:count" @click="$_.state.inc">+</button>
             </div>
           </div>
         </div>
@@ -70,28 +69,26 @@
 
           <div x-show="show">Am hidden by default</div>
 
-          <button data-var="show" @click="$_.bool.toggle">Toggle</button>
+          <button data-cspine="toggle:show" @click="$_.bool.toggle">
+            Toggle
+          </button>
         </div>
 
         <div>
           <h2>Empty example</h2>
 
-          <div data-var="emptyObject" x-show="$_.state.empty">
+          <div data-cspine="empty:emptyObject" x-show="$_.state.empty">
             Am an empty string, object or array
           </div>
         </div>
       </div>
 
       <div class="row">
-        <div data-var="nullValue" data-type="null" x-show="$_.state.type">
+        <div data-cspine="type:nullValue->'null'(null)" x-show="$_.state.type">
           Null
         </div>
 
-        <button
-          data-var="nullValue"
-          data-cast="value=null"
-          @click="$_.state.set"
-        >
+        <button data-cspine="set:nullValue->(null)" @click="$_.state.set">
           Set to Null
         </button>
 
@@ -99,9 +96,7 @@
           <div data-case="true">
             Am logged in
             <button
-              data-var="isLoggedIn"
-              data-cast="value=boolean"
-              data-value="false"
+              data-cspine="set:isLoggedIn->false(bool)"
               @click="$_.state.set"
             >
               Sign out
@@ -110,9 +105,7 @@
           <div data-case="false">
             Am logged out
             <button
-              data-var="isLoggedIn"
-              data-cast="value=boolean"
-              data-value="true"
+              data-cspine="set:isLoggedIn->true(bool)"
               @click="$_.state.set"
             >
               Log in
@@ -121,37 +114,48 @@
         </div>
 
         <p x-text="isLoggedIn"></p>
-        <p data-type="boolean" data-var="isLoggedIn" x-show="$_.state.type">
+        <p data-cspine="type:isLoggedIn->'boolean'" x-show="$_.state.type">
           Bool
         </p>
-        <p data-type="string" data-var="isLoggedIn" x-show="$_.state.type">
+        <p data-cspine="type:isLoggedIn->'string'" x-show="$_.state.type">
           String
         </p>
 
         <div
-          data-var="bg"
-          data-true="bg-red"
-          data-false="bg-blue"
+          data-cspine="classToggle:bg|'bg-red','bg-blue'"
           :class="$_.ui.classToggle"
         >
           Bg color toggle
         </div>
 
-        <button data-var="show" @click="$_.util.log">Log</button>
+        <div
+          data-cspine="class:bg_str|default='bg-default',\default='bg-blue',red1='bg-red',blue1='bg-blue'"
+          :class="$_.ui.class"
+        >
+          Bg color toggle
+        </div>
 
-        <button data-var="bg" @click="$_.bool.toggle">toggle Bg</button>
+        <button
+          data-cspine="log:show|bg_str,obj.name,group='util'"
+          @click="$_.util.log"
+        >
+          Log
+        </button>
+
+        <button data-cspine="toggle:bg" @click="$_.bool.toggle">
+          toggle Bg
+        </button>
 
         <h2>Call with evaluate</h2>
 
         <button
-          data-var="emptyString"
-          data-call="$_.state.reset"
+          data-cspine="reset:emptyString;$_.state.reset()"
           @click="$_.util.call"
         >
           Set empty string
         </button>
 
-        <div data-var="emptyString" x-show="$_.state.empty">
+        <div data-cspine="empty:emptyString" x-show="$_.state.empty">
           Am an empty string, object or array
         </div>
       </div>
@@ -163,12 +167,21 @@
           Alpine.data("page", () => ({
             show: false,
             bg: true,
+            bg_str: "default",
             isLoggedIn: true,
             count: 0,
             nullValue: 1,
             emptyString: "eiejfiefjiefj",
             emptyArray: ["fgfgfgf"],
             emptyObject: {},
+
+            obj: {
+              name: "Ian Otieno",
+            },
+
+            log(text) {
+              console.log(typeof text, text);
+            },
           }));
         });
       }

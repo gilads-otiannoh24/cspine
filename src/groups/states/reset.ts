@@ -1,18 +1,25 @@
-import { MagicUtilitiesWithContext } from "@/CSPine";
-import { accessVariable } from "@/utils/accessVariable";
+import { Options } from "@/CSPine";
+import { accessVariable, setVariable } from "@/utils/accessVariable";
+import { warnEmptyNode } from "@/utils/issueWarning";
 import { useContext } from "@/utils/useContext";
 
-export function reset(el: HTMLElement, options: MagicUtilitiesWithContext) {
-  const ctx = useContext(el, "reset", "var", true);
+export function reset(el: HTMLElement, options: Options) {
+  const ctx = useContext(el, "reset", options, true);
 
+  const node = ctx.parsed;
+
+  if (!node) {
+    warnEmptyNode(ctx.fn, "state", el);
+    return;
+  }
+
+  let varName = node.reference as string;
   const cp = options.this;
-
-  let varName = ctx.varName;
 
   const variable = accessVariable(cp, varName);
 
-  if (typeof variable === "string") accessVariable(cp, varName, "set", "");
-  else if (Array.isArray(variable)) accessVariable(cp, varName, "set", []);
-  else if (typeof variable === "object") accessVariable(cp, varName, "set", {});
+  if (typeof variable === "string") setVariable(cp, varName, "");
+  else if (Array.isArray(variable)) setVariable(cp, varName, []);
+  else if (typeof variable === "object") setVariable(cp, varName, {});
   else accessVariable(cp, varName, "set", null);
 }

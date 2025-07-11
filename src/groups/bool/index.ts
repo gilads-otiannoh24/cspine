@@ -1,14 +1,13 @@
-import { Config, CSPineUtil, MagicUtilitiesWithContext } from "@/CSPine";
-import { AlpineComponent, MagicUtilities } from "alpinejs";
+import { Config, CSPineUtil } from "@/CSPine";
 import { toggle } from "./toggle";
-import { getAlpineInstance } from "@/utils/getAlpineInstance";
 import { truthy } from "./truthy";
 import { falsy } from "./falsy";
+import { MagicUtilities } from "alpinejs";
 
 export interface BooleanUtils {
-  toggle(alpine?: AlpineComponent<any>): void;
-  truthy(alpine?: AlpineComponent<any>): boolean;
-  falsy(alpine?: AlpineComponent<any>): boolean;
+  toggle(e?: Event): void;
+  truthy(e?: Event): boolean;
+  falsy(e?: Event): boolean;
 }
 
 export function bool(
@@ -17,16 +16,16 @@ export function bool(
   config: Config
 ): CSPineUtil<BooleanUtils> {
   return {
-    toggle(alpine) {
-      toggle($el, { ...options, this: this });
+    toggle(e) {
+      toggle($el, { ...options, this: this, e, config });
     },
 
-    truthy(alpine) {
-      return truthy($el, { ...options, this: this });
+    truthy(e) {
+      return truthy($el, { ...options, this: this, e, config });
     },
 
-    falsy(alpine) {
-      return falsy($el, { ...options, this: this });
+    falsy(e) {
+      return falsy($el, { ...options, this: this, e, config });
     },
 
     $config: {

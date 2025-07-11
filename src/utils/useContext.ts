@@ -1,23 +1,29 @@
-import { AlpineComponent } from "alpinejs";
-import { getAlpineInstance } from "./getAlpineInstance";
+import { Options } from "@/CSPine";
 import { resolveData } from "./resolveDatasetValue";
+import { parseNode } from "./parseNode";
+import { ASTNode } from "@/v2/dsl/types";
 
 export function useContext(
   el: HTMLElement,
-  fn: string,
-  datasetKey: string = "var",
+  fnNmae: string | { fn: string; group: string },
+  options: Options,
   singleRecord?: boolean
 ) {
-  const dataset = el.dataset;
-  let varName = resolveData(dataset, fn, datasetKey);
-
-  if (singleRecord !== undefined && singleRecord) {
-    if (Array.isArray(varName) && varName.length > 0) {
-      varName = varName[0];
-    } else if (Array.isArray(varName) && varName.length === 0) {
-      throw new Error(fn + ": Variable is not set");
-    }
+  let fn = "";
+  let group = "";
+  if (typeof fnNmae === "string") {
+    fn = fnNmae;
+  } else {
+    fn = fnNmae.fn;
+    group = fnNmae.group;
   }
 
-  return { varName, dataset, fn };
+  let nodes = resolveData(el, { fn, group }, singleRecord);
+  let parsed;
+
+  if (singleRecord) {
+    parsed = parseNode(nodes as ASTNode, options);
+  }
+
+  return { nodes, fn, parsed, group };
 }

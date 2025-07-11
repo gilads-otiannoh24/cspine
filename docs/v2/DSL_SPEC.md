@@ -133,3 +133,17 @@ character        = ? any printable character except control characters and quote
 Have thoughts? Add proposals or symbol suggestions to `spec/v2-outline.md`, or open a feature flag idea in the repo.
 
 ---
+
+## Input coverage Resolution form v1
+
+Providing the variable to use for a given function works fine. This can be for any function which is the general rule.
+
+Providing the value to set or to comapre with the refrence value is working well.
+
+Ability to provide addittional arguments using the command-specific arguments.
+
+## Suggested improvements
+
+Enable attaching of an event to a certain command through the command-specific arguments.
+
+this means there needs to be reserverd words in the argument specific argmuents and the ability to still use them if need be.
