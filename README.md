@@ -102,11 +102,11 @@ Each group exposes pure utility functions via the special Alpine Magic helper $\
 
 ### 🔹 Example Utility Groups
 
-| Group   | Purpose                                              |
-| ------- | ---------------------------------------------------- |
-| `state` | Manage data state (`set`, `not`, `reset`, etc.)      |
-| `ui`    | UI manipulation (`classToggle`, `class`, etc.)       |
-| `bool`  | Manages boolean values (`truthy`, `falsy`, `toggle`) |
+| Group                           | Purpose                                              |
+| ------------------------------- | ---------------------------------------------------- |
+| [`state`](docs/groups/state.md) | Manage data state (`set`, `not`, `reset`, etc.)      |
+| [`ui`](docs/groups/ui.md)       | UI manipulation (`classToggle`, `class`, etc.)       |
+| [`bool`](docs/groups/bool.md)   | Manages boolean values (`truthy`, `falsy`, `toggle`) |
 
 You can invoke any function using the DSL, and pass in arguments via your HTML using the data-cspine attribute:
 
