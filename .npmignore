@@ -7,4 +7,6 @@ vitest.config.js
 features.txt
 tests/
 examples/
+docs/
 .vscode/
+LICENCE
