@@ -37,14 +37,11 @@ export function parseNode(
       const cast = a.value.cast;
       const type = a.value.type;
 
-      if (log) console.log(cast);
-
       if (type === "reference") {
         value = options.evaluate(value);
       }
 
       if (cast) {
-        if (log) console.log("got here");
         value = castValue(value, cast);
       }
 

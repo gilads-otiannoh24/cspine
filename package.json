@@ -31,7 +31,8 @@
     "test": "vitest",
     "types": "tsc --project tsconfig.json",
     "dev": "webpack --watch",
-    "build": "webpack && npm run types"
+    "build": "webpack && npm run types",
+    "publish": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",

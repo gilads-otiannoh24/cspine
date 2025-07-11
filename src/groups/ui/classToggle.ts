@@ -1,23 +1,22 @@
-import { Config, Options } from "@/CSPine";
+import { Options } from "@/CSPine";
 import { warnEmptyNode } from "@/utils/issueWarning";
 import { useContext } from "@/utils/useContext";
 
 export function classToggle(el: HTMLElement, options: Options): string {
   const ctx = useContext(el, "classToggle", options, true);
-  if (!ctx.parsed) {
+
+  const node = ctx.parsed;
+  if (!node) {
     warnEmptyNode(ctx.fn, "ui", el);
     return "";
   }
+  const classTrue = node.commandArgs.positional[0] || "";
+  const classFalse = node.commandArgs.positional[1] || "";
+  const variable = options.evaluate(node.reference as string);
 
-  const node = ctx.parsed;
-  const classTrue = ctx.parsed.commandArgs.positional[0] || "";
-  const classFalse = ctx.parsed.commandArgs.positional[1] || "";
-
-  if (node.target) {
-    return options.evaluate(node.reference as string) === node.target.value
-      ? classTrue
-      : classFalse;
+  if (node.target?.value) {
+    return variable === node.target.value ? classTrue : classFalse;
   }
 
-  return options.evaluate(node.reference as string) ? classTrue : classFalse;
+  return variable ? classTrue : classFalse;
 }

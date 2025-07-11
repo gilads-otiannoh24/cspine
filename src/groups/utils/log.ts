@@ -1,5 +1,6 @@
 import { Options } from "@/CSPine";
 import { warnEmptyNode } from "@/utils/issueWarning";
+import { track } from "@/utils/tracking";
 import { useContext } from "@/utils/useContext";
 
 export function log(el: HTMLElement, options: Options) {
@@ -13,19 +14,22 @@ export function log(el: HTMLElement, options: Options) {
 
   const later = options.evaluateLater(node.reference as string);
 
-  options.effect(() => {
-    later((ref) => {
-      console.log(ref);
+  if (track(el, ctx.group, ctx.fn)) {
+    options.effect(() => {
+      later((ref) => {
+        console.log(ref);
+      });
     });
-  });
+  }
 
   node.commandArgs.positional.forEach((ref) => {
     const later = options.evaluateLater(ref);
-
-    options.effect(() => {
-      later((v) => {
-        console.log(v);
+    if (track(el, ctx.group, ctx.fn)) {
+      options.effect(() => {
+        later((v) => {
+          console.log(v);
+        });
       });
-    });
+    }
   });
 }
