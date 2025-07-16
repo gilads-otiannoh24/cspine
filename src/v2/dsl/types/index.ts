@@ -1,4 +1,4 @@
-export type ASTNode = NormalNode | CallNode;
+export type ASTNode = NormalNode | CallNode | ScopeUseNode;
 
 export interface ValueNode {
   type: "literal" | "reference";
@@ -19,10 +19,19 @@ export interface CallNode {
 
 export type CommandArgs = {
   positional: string[];
-  named: Record<string, { value: any; escaped: boolean; escapedValue: any }>;
+  named: Record<
+    string,
+    {
+      value: any;
+      escaped: boolean;
+      otherValues: { value: string[]; escaped: string[] };
+      escapedValue: any;
+    }
+  >;
 };
 
 export type NormalNode = {
+  group: string | null;
   command: string;
   reference: string;
   target: {
@@ -32,4 +41,10 @@ export type NormalNode = {
   } | null;
   commandArgs: CommandArgs;
   type: "normal";
+};
+
+export type ScopeUseNode = {
+  type: "scope_use";
+  command: string;
+  commandArgs: CommandArgs;
 };

@@ -4,4 +4,5 @@ export const RESERVED_ARG_KEYWORDS = [
   "when",
   "delay",
   "group",
+  "operator",
 ];

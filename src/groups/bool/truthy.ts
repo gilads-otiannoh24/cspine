@@ -3,26 +3,17 @@ import { warnEmptyNode } from "@/utils/issueWarning";
 import { useContext } from "@/utils/useContext";
 
 export function truthy(el: HTMLElement, options: Options) {
-  const ctx = useContext(el, "truthy", options, true);
+  const ctx = useContext(el, { fn: "truthy", group: "bool" }, options, true);
 
   const node = ctx.parsed;
 
   if (!node) {
-    warnEmptyNode(ctx.fn, "bool", el);
+    warnEmptyNode(ctx.fn, ctx.group, el);
     return false;
   }
 
   const varName = node.reference as string;
   const variable = options.evaluate(varName);
 
-  if (typeof variable === "boolean") {
-    return variable === true;
-  } else {
-    console.warn(
-      "CSPUtils::bool.isTrue - Variable cannot be toggled as it is not a boolean\n",
-      el
-    );
-  }
-
-  return false;
+  return variable !== undefined && variable !== null;
 }

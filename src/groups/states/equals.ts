@@ -3,7 +3,7 @@ import { warnEmptyNode } from "@/utils/issueWarning";
 import { useContext } from "@/utils/useContext";
 
 export function equals(el: HTMLElement, options: Options) {
-  const ctx = useContext(el, "equals", options, true);
+  const ctx = useContext(el, { fn: "equals", group: "state" }, options, true);
 
   const node = ctx.parsed;
 

@@ -1,5 +1,5 @@
 import { parse } from "@/v2/dsl/parse";
-import { escape } from "lodash";
+import { NormalNode } from "@/v2/dsl/types";
 import { describe, expect, it } from "vitest";
 
 describe("AST Builder - normal mode", () => {
@@ -7,6 +7,7 @@ describe("AST Builder - normal mode", () => {
     const ast = parse(`set:x->10`);
     expect(ast).toEqual([
       {
+        group: null,
         command: "set",
         reference: "x",
         target: { type: "literal", value: "10" },
@@ -23,6 +24,7 @@ describe("AST Builder - normal mode", () => {
     const ast = parse(`set:x`);
     expect(ast).toEqual([
       {
+        group: null,
         command: "set",
         reference: "x",
         commandArgs: {
@@ -39,6 +41,7 @@ describe("AST Builder - normal mode", () => {
     const ast = parse(`set:x|'hello'`);
     expect(ast).toEqual([
       {
+        group: null,
         command: "set",
         reference: "x",
         commandArgs: {
@@ -55,6 +58,7 @@ describe("AST Builder - normal mode", () => {
     const ast = parse(`set:x->'hello'(string)`);
     expect(ast).toEqual([
       {
+        group: null,
         command: "set",
         reference: "x",
         target: {
@@ -75,6 +79,7 @@ describe("AST Builder - normal mode", () => {
     const ast = parse(`set:x->'hello'`);
     expect(ast).toEqual([
       {
+        group: null,
         command: "set",
         reference: "x",
         target: {
@@ -91,10 +96,11 @@ describe("AST Builder - normal mode", () => {
   });
 
   it("should build AST from multiple var sets with casts", () => {
-    const ast = parse(`set:x->45(number);set:y->user.id(string)`);
+    const ast = parse(`state.set:x->45(number);fn.set:y->user.id(string)`);
 
     expect(ast).toEqual([
       {
+        group: "state",
         command: "set",
         reference: "x",
         target: { type: "literal", value: "45", cast: "number" },
@@ -105,6 +111,7 @@ describe("AST Builder - normal mode", () => {
         type: "normal",
       },
       {
+        group: "fn",
         command: "set",
         reference: "y",
         target: { type: "reference", value: "user.id", cast: "string" },
@@ -122,6 +129,7 @@ describe("AST Builder - normal mode", () => {
 
     expect(ast).toEqual([
       {
+        group: null,
         command: "set",
         reference: "ready",
         target: { type: "literal", value: "true", cast: "bool" },
@@ -132,6 +140,7 @@ describe("AST Builder - normal mode", () => {
         type: "normal",
       },
       {
+        group: null,
         command: "set",
         reference: "active",
         target: { type: "literal", value: "false", cast: "bool" },
@@ -153,6 +162,7 @@ describe("AST Builder - normal mode", () => {
     const ast = parse(`set:$store.user.age->45(number)`); // no ->
     expect(ast).toEqual([
       {
+        group: null,
         command: "set",
         reference: "$store.user.age",
         target: {
@@ -169,6 +179,37 @@ describe("AST Builder - normal mode", () => {
     ]);
   });
 
+  it("should parse a number as a named attribute", () => {
+    const ast = parse(`set:$store.user.age->45(number)|10='red'`); // no ->
+    expect(ast).toEqual<NormalNode[]>([
+      {
+        group: null,
+        command: "set",
+        reference: "$store.user.age",
+        target: {
+          value: "45",
+          cast: "number",
+          type: "literal",
+        },
+        commandArgs: {
+          positional: [],
+          named: {
+            "10": {
+              value: "red",
+              escaped: false,
+              otherValues: {
+                value: [],
+                escaped: [],
+              },
+              escapedValue: null,
+            },
+          },
+        },
+        type: "normal",
+      },
+    ]);
+  });
+
   it("should parse command specific arguments from any command independent of position in text", () => {
     const ast = parse(
       `toggle:toggleClass;classtoggle:toggleclass|'success','warning',value='foo';log:$_.ui.classToggle`
@@ -176,6 +217,7 @@ describe("AST Builder - normal mode", () => {
 
     expect(ast).toEqual([
       {
+        group: null,
         command: "toggle",
         reference: "toggleClass",
         target: null,
@@ -187,18 +229,28 @@ describe("AST Builder - normal mode", () => {
       },
 
       {
+        group: null,
         command: "classtoggle",
         reference: "toggleclass",
         target: null,
         commandArgs: {
           positional: ["success", "warning"],
           named: {
-            value: { value: "foo", escaped: false, escapedValue: null },
+            value: {
+              value: "foo",
+              escaped: false,
+              escapedValue: null,
+              otherValues: {
+                escaped: [],
+                value: [],
+              },
+            },
           },
         },
         type: "normal",
       },
       {
+        group: null,
         command: "log",
         reference: "$_.ui.classToggle",
         target: null,

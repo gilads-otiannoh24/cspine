@@ -144,12 +144,25 @@
         >
           Bg color toggle
         </div>
+        <div
+          data-cspine="classToggle:bg_str_number->10(number)|'bg-red','bg-blue',operator='<'"
+          :class="$_.ui.classToggle"
+        >
+          Bg color toggle with operator
+        </div>
 
         <div
           data-cspine="class:bg_str|default='bg-default',\default='bg-blue',red1='bg-red',blue1='bg-blue'"
           :class="$_.ui.class"
         >
-          Bg color toggle
+          Bg color toggle with class fn
+        </div>
+
+        <div
+          data-cspine="class:bg_str_number|default='bg-default',10='bg-red,===',21='bg-blue',cast='number', operator='<'"
+          :class="$_.ui.class"
+        >
+          Bg color toggle with class fn and number
         </div>
 
         <button
@@ -185,6 +198,21 @@
           Toggle Background color
         </button>
       </div>
+
+      <div
+        data-cspine-scope="
+            commands:
+            greet := alert('Hello!'(string));
+            validate := form.validate:email->error(string)|silent=true;
+        
+            args:
+              form.validate := silent=true, errorTarget='err-zone';
+              alert := type='info';
+          
+            groups:
+              form := layout='stacked';
+              alert := duration=5000;"
+      ></div>
     </div>
 
     <script>
@@ -194,6 +222,7 @@
             show: false,
             bg: true,
             bg_str: "default",
+            bg_str_number: 12,
             isLoggedIn: true,
             count: 0,
             nullValue: 1,

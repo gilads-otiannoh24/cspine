@@ -112,8 +112,7 @@ describe("AST Builder - call mode", () => {
 
   it("should include positional argument and escaped named args", () => {
     const ast = parse(
-      `notify ("Saved!"(string), 3000(number))|'hello',event='click',\\event='value'`,
-      { tokenizer: false, ast: true }
+      `notify ("Saved!"(string), 3000(number))|'hello',event='click',\\event='value'`
     ); // no ()
     expect(ast).toEqual([
       {
@@ -126,7 +125,15 @@ describe("AST Builder - call mode", () => {
         commandArgs: {
           positional: ["hello"],
           named: {
-            event: { value: "click", escapedValue: "value", escaped: true },
+            event: {
+              value: "click",
+              escapedValue: "value",
+              escaped: true,
+              otherValues: {
+                escaped: [],
+                value: [],
+              },
+            },
           },
         },
       },
@@ -167,7 +174,15 @@ describe("AST Builder - call mode", () => {
         commandArgs: {
           positional: [],
           named: {
-            greeting: { value: "hello", escapedValue: null, escaped: false },
+            greeting: {
+              value: "hello",
+              escapedValue: null,
+              escaped: false,
+              otherValues: {
+                escaped: [],
+                value: [],
+              },
+            },
           },
         },
       },
@@ -189,8 +204,24 @@ describe("AST Builder - call mode", () => {
         commandArgs: {
           positional: [],
           named: {
-            greeting: { value: "hello", escapedValue: null, escaped: false },
-            name: { value: "ian otieno", escapedValue: null, escaped: false },
+            greeting: {
+              value: "hello",
+              escapedValue: null,
+              escaped: false,
+              otherValues: {
+                escaped: [],
+                value: [],
+              },
+            },
+            name: {
+              value: "ian otieno",
+              escapedValue: null,
+              escaped: false,
+              otherValues: {
+                escaped: [],
+                value: [],
+              },
+            },
           },
         },
       },
@@ -212,8 +243,24 @@ describe("AST Builder - call mode", () => {
         commandArgs: {
           positional: ["arg1", "arg2"],
           named: {
-            greeting: { value: "hello", escapedValue: null, escaped: false },
-            name: { value: "ian otieno", escapedValue: null, escaped: false },
+            greeting: {
+              value: "hello",
+              escapedValue: null,
+              otherValues: {
+                escaped: [],
+                value: [],
+              },
+              escaped: false,
+            },
+            name: {
+              value: "ian otieno",
+              escapedValue: null,
+              otherValues: {
+                escaped: [],
+                value: [],
+              },
+              escaped: false,
+            },
           },
         },
       },

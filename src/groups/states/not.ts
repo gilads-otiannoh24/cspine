@@ -3,7 +3,7 @@ import { warnEmptyNode } from "@/utils/issueWarning";
 import { useContext } from "@/utils/useContext";
 
 export function not(el: HTMLElement, options: Options) {
-  const ctx = useContext(el, "not", options, true);
+  const ctx = useContext(el, { fn: "not", group: "state" }, options, true);
 
   const node = ctx.parsed;
 

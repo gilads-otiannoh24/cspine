@@ -1,13 +1,14 @@
 import { Options } from "@/CSPine";
-import { warnEmptyNode } from "@/utils/issueWarning";
+import { warn as warnE } from "@/utils/issueWarning";
 import { useContext } from "@/utils/useContext";
 
 export function empty(el: HTMLElement, options: Options): boolean {
-  const ctx = useContext(el, "empty", options, true);
-  const parsed = ctx.parsed;
+  const ctx = useContext(el, { fn: "empty", group: "state" }, options, true);
+  const { parsed, fn, group, nodes } = ctx;
+  const warn = warnE(fn, group, el);
 
   if (!parsed) {
-    warnEmptyNode(ctx.fn, "state", el);
+    warn.emptyNode();
     return false;
   }
 

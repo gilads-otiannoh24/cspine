@@ -1,8 +1,9 @@
 import { chunkTokens } from "@/v2/utils/chunkTokens";
-import { Token } from "../tokenizer";
 import { ASTNode } from "../types";
 import { buildCallAST } from "./call";
 import { buildNormalAST } from "./normal";
+import { Token } from "@/v2/dsl/tokenizer/tokenize";
+import { buildScopeUseAST } from "./scopeUse";
 
 export function buildAST(inputTokens: Token[], log: boolean = false) {
   const commands = chunkTokens(inputTokens);
@@ -23,8 +24,14 @@ export function buildAST(inputTokens: Token[], log: boolean = false) {
         asts.push(...buildCallAST(command, log));
         parsed = true;
       }
+
       if (token.type === "command_type" && token.value === "normal") {
         asts.push(...buildNormalAST(command, log));
+        parsed = true;
+      }
+
+      if (token.type === "command_type" && token.value === "scope_use") {
+        asts.push(...buildScopeUseAST(command, log));
         parsed = true;
       }
     }

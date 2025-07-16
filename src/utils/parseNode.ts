@@ -1,17 +1,15 @@
 import { Options } from "@/CSPine";
 import { castValue } from "./castValue";
-import { ASTNode, CallNode, NormalNode } from "@/v2/dsl/types";
-
-type CommandArg = {
-  named: Record<string, { value: any; escaped: boolean; escapedValue: any }>;
-  positional: any[];
-};
+import { ASTNode, CallNode, CommandArgs, NormalNode } from "@/v2/dsl/types";
+import { resolveContextRefs } from "./resolveContectRefs";
+import { buildCommandArgs } from "./buislCommandArgs";
 
 type CallArg = {
   value: any;
 };
 
 export interface ParsedNode {
+  group: string | null;
   command: string | null;
   reference: string | null;
   target: {
@@ -19,7 +17,7 @@ export interface ParsedNode {
   } | null;
   name: string | null;
   args: CallArg[] | null;
-  commandArgs: CommandArg;
+  commandArgs: CommandArgs;
 }
 
 export function parseNode(
@@ -28,6 +26,7 @@ export function parseNode(
   log: boolean = false
 ): ParsedNode | null {
   let parsedNode: ParsedNode | null = null;
+  const commandArgs = buildCommandArgs(node.commandArgs, options);
 
   if (node.type === "call") {
     const call = node as CallNode;
@@ -37,7 +36,14 @@ export function parseNode(
       const cast = a.value.cast;
       const type = a.value.type;
 
-      if (type === "reference") {
+      value = resolveContextRefs(value, options);
+
+      if (
+        type === "reference" &&
+        !(
+          typeof a.value.value === "string" && a.value.value.startsWith("@ctx.")
+        )
+      ) {
         value = options.evaluate(value);
       }
 
@@ -49,11 +55,12 @@ export function parseNode(
     });
 
     parsedNode = {
+      group: "util",
       name: call.name,
       command: null,
       reference: null,
       target: null,
-      commandArgs: call.commandArgs,
+      commandArgs: commandArgs,
       args,
     };
   }
@@ -65,7 +72,13 @@ export function parseNode(
       if (!t) return null;
 
       let value = t.value;
-      if (t.type === "reference") {
+
+      value = resolveContextRefs(value, options);
+
+      if (
+        t.type === "reference" &&
+        !(typeof t.value === "string" && t.value.startsWith("@ctx."))
+      ) {
         value = options.evaluate(t.value);
       }
 
@@ -77,12 +90,25 @@ export function parseNode(
     };
 
     parsedNode = {
+      group: normal.group,
       name: null,
       command: normal.command,
       reference: normal.reference,
       target: { value: target(normal.target) },
-      commandArgs: normal.commandArgs,
+      commandArgs: commandArgs,
       args: null,
+    };
+  }
+
+  if (node.type === "scope_use") {
+    parsedNode = {
+      group: null,
+      name: null,
+      command: node.command,
+      reference: null,
+      target: null,
+      args: null,
+      commandArgs: commandArgs,
     };
   }
 

@@ -3,7 +3,7 @@ import { warnEmptyNode } from "@/utils/issueWarning";
 import { useContext } from "@/utils/useContext";
 
 export function lessThan(el: HTMLElement, options: Options) {
-  const ctx = useContext(el, "lessThan", options, true);
+  const ctx = useContext(el, { fn: "lessThan", group: "state" }, options, true);
 
   const node = ctx.parsed;
 

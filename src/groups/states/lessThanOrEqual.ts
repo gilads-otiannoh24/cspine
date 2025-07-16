@@ -4,7 +4,12 @@ import { resolveData } from "@/utils/resolveDatasetValue";
 import { useContext } from "@/utils/useContext";
 
 export function lessThanOrEqual(el: HTMLElement, options: Options) {
-  const ctx = useContext(el, "lessThanOrEqual", options, true);
+  const ctx = useContext(
+    el,
+    { fn: "lessThanOrEqual", group: "state" },
+    options,
+    true
+  );
 
   const node = ctx.parsed;
 

@@ -4,7 +4,12 @@ import { resolveData } from "@/utils/resolveDatasetValue";
 import { useContext } from "@/utils/useContext";
 
 export function greaterThan(el: HTMLElement, options: Options) {
-  const ctx = useContext(el, "greaterThan", options, true);
+  const ctx = useContext(
+    el,
+    { fn: "greaterThan", group: "state" },
+    options,
+    true
+  );
 
   const node = ctx.parsed;
 

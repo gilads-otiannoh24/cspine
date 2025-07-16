@@ -43,9 +43,8 @@ export function resolveDatasetValue(
 
 export function resolveData(
   el: HTMLElement,
-  fn: { fn: string; group: string },
-  singleRecord: boolean = false
-): ASTNode[] | ASTNode {
+  fn: { fn: string; group: string }
+): ASTNode[] {
   const input = el.dataset.cspine;
 
   if (input === undefined) {
@@ -70,10 +69,6 @@ export function resolveData(
       ? namedGroup.value === group && n.command === fnName
       : n.command === fnName;
   });
-
-  if (singleRecord) {
-    return nodes[0] || [];
-  }
 
   return nodes;
 }

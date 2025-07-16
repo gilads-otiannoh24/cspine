@@ -2,23 +2,32 @@ import { Options } from "@/CSPine";
 import { setVariable } from "@/utils/accessVariable";
 import { warnEmptyNode } from "@/utils/issueWarning";
 import { parseNode } from "@/utils/parseNode";
+import { resolveEventNode } from "@/utils/resolveEventNode";
 import { useContext } from "@/utils/useContext";
+import { ASTNode } from "@/v2/dsl/types";
 
 export function set(el: HTMLElement, options: Options) {
-  const ctx = useContext(el, "set", options);
+  const ctx = useContext(el, { fn: "set", group: "state" }, options);
 
-  const cp = options.this;
   const nodes = ctx.nodes;
 
   if (!nodes) return warnEmptyNode(ctx.fn, "state", el);
+  let nodesToProcess = nodes;
 
-  if (Array.isArray(nodes)) {
-    nodes.forEach((node) => {
-      const parsed = parseNode(node, options);
+  const eventNode = resolveEventNode(nodes, options);
 
-      if (parsed?.reference && parsed?.target) {
-        setVariable(cp, parsed?.reference, parsed.target.value);
-      }
-    });
+  if (eventNode.node) nodesToProcess = eventNode.node;
+
+  if (Array.isArray(nodesToProcess)) {
+    nodesToProcess.forEach((node) => evaluateNode(node, options));
   }
 }
+
+const evaluateNode = (node: ASTNode, options: Options) => {
+  const parsed = parseNode(node, options);
+  const cp = options.this;
+
+  if (parsed?.reference && parsed?.target) {
+    setVariable(cp, parsed?.reference, parsed.target.value);
+  }
+};

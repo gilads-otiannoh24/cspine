@@ -1,4 +1,4 @@
-import { Token } from "../dsl/tokenizer";
+import { Token } from "../dsl/tokenizer/tokenize";
 import { CommandArgs } from "../dsl/types";
 
 export function getCommadArgs(tokens: Token[], i: number, args?: CommandArgs) {
@@ -16,6 +16,8 @@ export function getCommadArgs(tokens: Token[], i: number, args?: CommandArgs) {
         if (commandArgs.named[argToken.key].escaped) {
           if (!argToken.escaped) {
             commandArgs.named[argToken.key].value = argToken.value;
+            commandArgs.named[argToken.key].otherValues.value =
+              argToken.otherValues;
           } else {
             console.warn(
               "You cannot escape an argument more than once.",
@@ -26,6 +28,8 @@ export function getCommadArgs(tokens: Token[], i: number, args?: CommandArgs) {
           if (argToken.escaped) {
             commandArgs.named[argToken.key].escapedValue = argToken.value;
             commandArgs.named[argToken.key].escaped = true;
+            commandArgs.named[argToken.key].otherValues.escaped =
+              argToken.otherValues;
           } else {
             console.warn(
               "Duplicate value detected for argument.",
@@ -38,6 +42,10 @@ export function getCommadArgs(tokens: Token[], i: number, args?: CommandArgs) {
           value: !argToken.escaped ? argToken.value : null,
           escaped: argToken.escaped,
           escapedValue: argToken.escaped ? argToken.value : null,
+          otherValues: {
+            escaped: argToken.escaped ? argToken.otherValues : [],
+            value: !argToken.escaped ? argToken.otherValues : [],
+          },
         };
       }
     }

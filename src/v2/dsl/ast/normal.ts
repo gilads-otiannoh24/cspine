@@ -1,7 +1,7 @@
 import { attachCast } from "@/v2/utils/attachCast";
-import { Token } from "../tokenizer";
 import { NormalNode, CommandArgs, ValueNode } from "../types";
 import { getCommadArgs } from "@/v2/utils/getCommandArgs";
+import { Token } from "../tokenizer/tokenize";
 
 export function buildNormalAST(
   tokens: Token[],
@@ -12,6 +12,7 @@ export function buildNormalAST(
   let i = 0;
 
   while (i < tokens.length) {
+    let group = "";
     let command = "";
     let reference = "";
     let commandArgs: CommandArgs = { positional: [], named: {} };
@@ -22,37 +23,46 @@ export function buildNormalAST(
 
     if (log) console.log(token, "AST build iteration:" + i);
 
+    if (token?.type === "command_group") {
+      // 1. Expect: command
+      group = token.value;
+      i++;
+    }
+
+    token = tokens[i];
     if (token?.type === "command") {
       // 1. Expect: command
       command = token.value;
       i++;
     } else {
+      let t = tokens[i];
       i++; // Prevent infinite loop
-      if (log) console.log("Terminated on command", token);
+      if (log) console.log("Terminated on command", t);
 
       continue;
     }
 
-    token = tokens[i];
-
     // 2. Expect: reference
+    token = tokens[i];
     if (token?.type === "reference") {
       reference = token.value;
       i++;
     } else {
+      let t = tokens[i];
       i++;
-      if (log) console.log("Terminated on reference", tokens);
+      if (log) console.log("Terminated on reference", t);
       continue;
     }
 
     token = tokens[i];
-
     // 3. Expect: arrow
     if (token?.type === "arrow") {
       i++;
     } else {
+      let t = tokens[i];
+
       if (!["pipe", "eof"].includes(token?.type)) {
-        if (log) console.log("Terminated on arrow", token);
+        if (log) console.log("Terminated on arrow", t);
         i++;
         continue;
       }
@@ -85,7 +95,14 @@ export function buildNormalAST(
 
     // 7. Add to AST
     if (command && reference) {
-      result.push({ command, reference, target, commandArgs, type: "normal" });
+      result.push({
+        group: group || null,
+        command,
+        reference,
+        target,
+        commandArgs,
+        type: "normal",
+      });
     }
 
     // 8. Skip optional semicolon

@@ -47,6 +47,7 @@ export const mockOptions: Options = {
 describe("parseNode - normal node parsing", () => {
   it("parses a literal number target", () => {
     const node: ASTNode = {
+      group: null,
       type: "normal",
       command: "set",
       reference: "count",
@@ -68,6 +69,7 @@ describe("parseNode - normal node parsing", () => {
 
   it("parses a literal boolean target", () => {
     const node: ASTNode = {
+      group: null,
       type: "normal",
       command: "toggle",
       reference: "visible",
@@ -89,6 +91,7 @@ describe("parseNode - normal node parsing", () => {
 
   it("parses null cast", () => {
     const node: ASTNode = {
+      group: null,
       type: "normal",
       command: "set",
       reference: "data",
@@ -110,6 +113,7 @@ describe("parseNode - normal node parsing", () => {
 
   it("parses a reference with number cast", () => {
     const node: ASTNode = {
+      group: null,
       type: "normal",
       command: "set",
       reference: "total",
@@ -131,6 +135,7 @@ describe("parseNode - normal node parsing", () => {
 
   it("parses object cast", () => {
     const node: ASTNode = {
+      group: null,
       type: "normal",
       command: "set",
       reference: "settings",
@@ -152,6 +157,7 @@ describe("parseNode - normal node parsing", () => {
 
   it("parses fallback object on bad JSON", () => {
     const node: ASTNode = {
+      group: null,
       type: "normal",
       command: "set",
       reference: "settings",
@@ -236,8 +242,24 @@ describe("parseNode - call node parsing", () => {
       commandArgs: {
         positional: ["foo", "bar"],
         named: {
-          event: { value: "click", escaped: false, escapedValue: "" },
-          priority: { value: "high", escaped: false, escapedValue: "" },
+          event: {
+            value: "click",
+            escaped: false,
+            escapedValue: "",
+            otherValues: {
+              value: [],
+              escaped: [],
+            },
+          },
+          priority: {
+            value: "high",
+            escaped: false,
+            escapedValue: "",
+            otherValues: {
+              value: [],
+              escaped: [],
+            },
+          },
         },
       },
     };

@@ -1,7 +1,7 @@
 import { attachCast } from "@/v2/utils/attachCast";
-import { Token } from "../tokenizer";
 import { getCommadArgs } from "@/v2/utils/getCommandArgs";
 import { CallNode, CommandArgs, ValueNode } from "../types";
+import { Token } from "../tokenizer/tokenize";
 
 export function buildCallAST(
   tokens: Token[],

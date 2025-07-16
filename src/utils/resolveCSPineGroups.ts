@@ -13,6 +13,7 @@ import {
   ui,
   util,
 } from "@/groups";
+import { form } from "@/groups/form";
 import { MagicUtilities } from "alpinejs";
 
 export function resolveCSPineGroups(
@@ -35,6 +36,7 @@ export function resolveCSPineGroups(
       storage: storage(el, options, config),
       time: time(el, options, config),
       type: type(el, options, config),
+      form: form(el, options, config),
     };
   }
 

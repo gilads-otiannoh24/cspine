@@ -1,11 +1,11 @@
 import CSPine from "@/CSPine";
 import Alpine from "@alpinejs/csp";
-import { AlpineComponent, evaluate, InferInterceptors } from "alpinejs";
+import { AlpineComponent, InferInterceptors } from "alpinejs";
 import { domUpdate } from "./delay";
-import { bool, state } from "@/groups";
 
 export type Stack<T> = {
-  set: InferInterceptors<T>;
+  set: any;
+  data: any;
 
   load(): void;
   update(): Promise<void>;
@@ -17,15 +17,12 @@ export async function setupDom(
 ) {
   (window as any).Apline = Alpine;
 
+  document.body.innerHTML = html;
+
   Alpine.data("TestData", testData ?? ((): AlpineComponent<any> => ({})));
 
-  CSPine.config.groups = [state, bool];
-
   Alpine.plugin(CSPine.plugin);
-
   Alpine.start();
-
-  document.body.innerHTML = html;
 
   await domUpdate();
 }
@@ -63,8 +60,10 @@ export function setDataStack(data: object) {
 
 export const dataStack: Stack<any> = {
   set: {},
+  data: {},
   load() {
     this.set = typeof getDataStack() === "object" ? getDataStack() : {};
+    this.data = this.set;
   },
 
   async update() {

@@ -1,4 +1,4 @@
-import { Token } from "../dsl/tokenizer";
+import { Token } from "../dsl/tokenizer/tokenize";
 
 export function chunkTokens(tokens: Token[]): Token[][] {
   const chunks: Token[][] = [];

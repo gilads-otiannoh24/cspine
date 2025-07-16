@@ -1,7 +1,6 @@
 import { Options } from "@/CSPine";
 import { resolveData } from "./resolveDatasetValue";
 import { parseNode } from "./parseNode";
-import { ASTNode } from "@/v2/dsl/types";
 
 export function useContext(
   el: HTMLElement,
@@ -18,12 +17,13 @@ export function useContext(
     group = fnNmae.group;
   }
 
-  let nodes = resolveData(el, { fn, group }, singleRecord);
+  let nodes = resolveData(el, { fn, group });
   let parsed;
+  let node = nodes[0] ?? undefined;
 
-  if (singleRecord) {
-    parsed = parseNode(nodes as ASTNode, options);
+  if (nodes) {
+    parsed = parseNode(nodes[0], options);
   }
 
-  return { nodes, fn, parsed, group };
+  return { nodes, node, fn, parsed, group };
 }

@@ -3,7 +3,12 @@ import { warnEmptyNode } from "@/utils/issueWarning";
 import { useContext } from "@/utils/useContext";
 
 export function greaterThanOrEqual(el: HTMLElement, options: Options) {
-  const ctx = useContext(el, "greaterThanOrEqual", options, true);
+  const ctx = useContext(
+    el,
+    { fn: "greaterThanOrEqual", group: "state" },
+    options,
+    true
+  );
 
   const node = ctx.parsed;
 

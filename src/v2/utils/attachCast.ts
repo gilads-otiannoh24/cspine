@@ -1,4 +1,4 @@
-import { Token } from "../dsl/tokenizer";
+import { Token } from "../dsl/tokenizer/tokenize";
 import { ValueNode } from "../dsl/types";
 
 export function attachCast(

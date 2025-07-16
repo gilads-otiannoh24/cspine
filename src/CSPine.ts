@@ -4,6 +4,7 @@ import {
   MagicUtilities,
 } from "alpinejs";
 import { resolveCSPineGroups } from "./utils/resolveCSPineGroups";
+import { initializeCSPineScopes } from "./v2/tree/init";
 
 export interface CSPineUtils {
   [key: string]: CSPineUtil<any>;
@@ -50,6 +51,8 @@ const CSPine: CSPine = {
   },
 
   plugin(Alpine: AlpineGlobal) {
+    initializeCSPineScopes();
+
     Alpine.magic(
       "_",
       (
@@ -70,44 +73,6 @@ const CSPine: CSPine = {
           CSPine.config
         )
     );
-
-    /* Alpine.directive(
-      "switch",
-      (
-        $el,
-        { expression },
-        { evaluate, evaluateLater, effect, cleanup, Alpine }
-      ) => {
-        const switchItem = evaluateLater(expression);
-
-        effect(() => {
-          switchItem((item) => {
-            $el.querySelectorAll("[data-case]").forEach((tpl) => {
-              let val = tpl.getAttribute("data-case") || "";
-              const cast =
-                $el.dataset.cast || tpl.getAttribute("data-cast") || "";
-
-              val = resolveData(
-                { case: val, cast },
-                "switch",
-                "case",
-                {
-                  Alpine,
-                  evaluate,
-                  evaluateLater,
-                  effect,
-                  cleanup,
-                  this: this,
-                },
-                true
-              );
-              (tpl as any).style.display =
-                item === val ? "inline-block" : "none";
-            });
-          });
-        });
-      }
-    ); */
   },
 };
 

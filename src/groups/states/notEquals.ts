@@ -4,7 +4,12 @@ import { resolveData } from "@/utils/resolveDatasetValue";
 import { useContext } from "@/utils/useContext";
 
 export function notEquals(el: HTMLElement, options: Options) {
-  const ctx = useContext(el, "notEquals", options, true);
+  const ctx = useContext(
+    el,
+    { fn: "notEquals", group: "state" },
+    options,
+    true
+  );
 
   const node = ctx.parsed;
 
