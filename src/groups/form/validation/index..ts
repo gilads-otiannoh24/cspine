@@ -15,7 +15,7 @@ export function validate(el: HTMLElement, options: Options) {
 
   const eventNode = resolveEventNode(nodes, options);
 
-  if (eventNode.node) return evaluateNode(eventNode.node, options);
+  if (eventNode.node.length) return evaluateNode(eventNode.node[0], options);
 
   nodes.forEach((n) => evaluateNode(n, options));
 }
