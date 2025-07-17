@@ -29,7 +29,7 @@ function evaluateNode(node: ASTNode, options: Options, el: HTMLElement) {
   let variable = evaluate(varName);
 
   if (typeof variable === "number") {
-    setVariable(cp, varName, --variable);
+    setVariable(cp, varName, ++variable);
   } else {
     console.warn(
       "CSPUtils::state.dec - Variable cannot be incremented as it is not a number\n",

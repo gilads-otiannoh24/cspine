@@ -15,7 +15,7 @@ export function reset(el: HTMLElement, options: Options) {
   if (!nodes || !node) return warn.emptyNode();
 
   const eventNode = resolveEventNode(nodes, options);
-  if (eventNode.node) return evaluateNode(eventNode.node, options);
+  if (eventNode.node.length) return evaluateNode(eventNode.node[0], options);
 
   return evaluateNode(node, options);
 }

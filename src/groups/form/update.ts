@@ -13,7 +13,7 @@ export function update(el: HTMLElement, options: Options) {
 
   if (!nodes.length) return warn.emptyNode();
   if (!event) return warn.emptyEvent();
-  if (!type || !value) return warn.form.noTypeOrValue();
+  if (!type || (!value && !files)) return warn.form.noTypeOrValue();
 
   if (event && !["input", "change"].includes(event.type))
     return warn.unexpectedEvent("input or change", event);
@@ -27,7 +27,7 @@ export function update(el: HTMLElement, options: Options) {
       date: new Date(value),
       time: value,
       color: value,
-      file: files || value,
+      file: files,
       radio: value,
       select: value,
       tel: String(value).trim(),

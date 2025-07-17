@@ -19,7 +19,7 @@ describe("isTrue bool function", () => {
 
     setupTestFrame(
       /* html */ `
-      <span id="output" data-cspine="truthy:foo" x-show="$_.bool.truthy"></span>
+      <span id="output" data-cspine="bool.truthy:foo" x-show="$_.bool.truthy"></span>
   `,
       data
     );

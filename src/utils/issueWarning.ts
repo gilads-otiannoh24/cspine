@@ -33,7 +33,7 @@ export const warn = (fn: string, group: string, el: HTMLElement) => {
     form: {
       noTypeOrValue() {
         console.warn(
-          `No type or value passed to ${group} function ${fn}\n This function has to be called on input or textarea elements\n`,
+          `No type or value passed to ${group} function ${fn}\n This function has to be called on select, input or textarea elements\n`,
           el
         );
       },

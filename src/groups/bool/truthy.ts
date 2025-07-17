@@ -15,5 +15,5 @@ export function truthy(el: HTMLElement, options: Options) {
   const varName = node.reference as string;
   const variable = options.evaluate(varName);
 
-  return variable !== undefined && variable !== null;
+  return variable !== undefined && variable !== null && variable !== false;
 }

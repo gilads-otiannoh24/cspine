@@ -11,16 +11,14 @@ export function set(el: HTMLElement, options: Options) {
 
   const nodes = ctx.nodes;
 
-  if (!nodes) return warnEmptyNode(ctx.fn, "state", el);
+  if (!nodes) return warnEmptyNode(ctx.fn, ctx.group, el);
   let nodesToProcess = nodes;
 
   const eventNode = resolveEventNode(nodes, options);
 
   if (eventNode.node) nodesToProcess = eventNode.node;
 
-  if (Array.isArray(nodesToProcess)) {
-    nodesToProcess.forEach((node) => evaluateNode(node, options));
-  }
+  nodesToProcess.forEach((node) => evaluateNode(node, options));
 }
 
 const evaluateNode = (node: ASTNode, options: Options) => {

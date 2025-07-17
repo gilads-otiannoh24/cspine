@@ -10,15 +10,13 @@ export function call(el: HTMLElement, options: Options) {
   const { nodes, fn, group } = ctx;
 
   if (!nodes) return warnEmptyNode(fn, group, el);
-  if (nodes.length === 1) return evaluateNode(nodes[0], options);
 
+  let nodesToProcess = nodes;
   const eventNode = resolveEventNode(nodes, options);
+  if (eventNode.node.length) nodesToProcess = eventNode.node;
+  if (nodesToProcess.length === 1) return evaluateNode(nodes[0], options);
 
-  if (eventNode.node) return evaluateNode(eventNode.node, options);
-
-  nodes.forEach((node) => {
-    evaluateNode(node, options);
-  });
+  nodesToProcess.forEach((n) => evaluateNode(n, options));
 }
 
 const evaluateNode = (node: ASTNode, options: Options) => {

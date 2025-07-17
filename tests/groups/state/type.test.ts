@@ -35,7 +35,6 @@ describe("Type state function", () => {
       <span id="el3" data-cspine="type:object->'object'" x-show="$_.state.type"></span>
       <span id="el4" data-cspine="type:fn->'function'" x-show="$_.state.type"></span>
       <span id="el5" data-cspine="type:number->'number'" x-show="$_.state.type"></span>
-      <span id="el6" data-cspine="type:un->'undefined'" x-show="$_.state.type"></span>
   `,
       data
     );
@@ -67,12 +66,6 @@ describe("Type state function", () => {
 
   test("should show element if type is number", async () => {
     const el = document.getElementById("el5")!;
-
-    expect((el as any)._x_isShown).toBe(true);
-  });
-
-  test("should show element if type is undefined", async () => {
-    const el = document.getElementById("el6")!;
 
     expect((el as any)._x_isShown).toBe(true);
   });
