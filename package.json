@@ -1,6 +1,6 @@
 {
   "name": "@gilads-otiannoh24/cspine",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "A set of alpinejs utility functions for working with alpinejs Content Security Policy (CSP) build easier",
   "types": "dist/utils.d.ts",
   "keywords": [
