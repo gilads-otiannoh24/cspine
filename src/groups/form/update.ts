@@ -13,7 +13,8 @@ export function update(el: HTMLElement, options: Options) {
 
   if (!nodes.length) return warn.emptyNode();
   if (!event) return warn.emptyEvent();
-  if (!type || (!value && !files)) return warn.form.noTypeOrValue();
+  if (!type || (value === undefined && !files))
+    return warn.form.noTypeOrValue();
 
   if (event && !["input", "change"].includes(event.type))
     return warn.unexpectedEvent("input or change", event);

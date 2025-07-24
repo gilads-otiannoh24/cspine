@@ -13,6 +13,13 @@ import { lessThan } from "./lessThan";
 import { greaterThanOrEqual } from "./greaterThanOrEqul";
 import { lessThanOrEqual } from "./lessThanOrEqual";
 import { MagicUtilities } from "alpinejs";
+import { ifFn } from "./if";
+import { or } from "./or";
+import { coalesce } from "./coalesce";
+import { and } from "./and";
+import { defined } from "./defined";
+import { notDefined } from "./notDefined";
+import { nor } from "./nor";
 
 export interface StateUtils {
   set(e?: Event): void;
@@ -28,6 +35,13 @@ export interface StateUtils {
   lessThan(e?: Event): boolean;
   greaterThanOrEqual(e?: Event): boolean;
   lessThanOrEqual(e?: Event): boolean;
+  if(e?: Event): any;
+  or(e?: Event): any;
+  and(e?: Event): boolean;
+  coalesce(e?: Event): any;
+  defined(e?: Event): any;
+  notDefined(e?: Event): any;
+  nor(e?: Event): any;
 }
 
 export function state(
@@ -86,6 +100,27 @@ export function state(
 
     lessThanOrEqual(e) {
       return lessThanOrEqual($el, { ...options, this: this, e, config });
+    },
+    if(e) {
+      return ifFn($el, { ...options, this: this, e, config });
+    },
+    or(e) {
+      return or($el, { ...options, this: this, e, config });
+    },
+    coalesce(e) {
+      return coalesce($el, { ...options, this: this, e, config });
+    },
+    and(e) {
+      return and($el, { ...options, this: this, e, config });
+    },
+    defined(e) {
+      return defined($el, { ...options, this: this, e, config });
+    },
+    notDefined(e) {
+      return notDefined($el, { ...options, this: this, e, config });
+    },
+    nor(e) {
+      return nor($el, { ...options, this: this, e, config });
     },
 
     $config: {

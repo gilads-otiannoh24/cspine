@@ -3,6 +3,7 @@ import { warn as warnE } from "./issueWarning";
 import { useContext } from "./useContext";
 import { ASTNode } from "@/v2/dsl/types";
 import { resolveEventNode } from "./resolveEventNode";
+import { ParsedNode, parseNode } from "./parseNode";
 
 export function withContext<T>(
   el: HTMLElement,
@@ -37,6 +38,8 @@ export function withContextParsed(
     ctx: ReturnType<typeof useContext>;
     nodes: ASTNode[];
     warn: ReturnType<typeof warnE>;
+    options: Options;
+    parsedNodes: (ParsedNode | null)[];
   }) => any,
   returnVar: any = ""
 ) {
@@ -49,7 +52,8 @@ export function withContextParsed(
   }
 
   const resolved = resolveEventNode(ctx.nodes, options);
-  const nodes = resolved.node ?? ctx.nodes;
+  const nodes = resolved.node.length > 0 ? resolved.node : ctx.nodes;
+  const parsedNodes = nodes.map((n) => parseNode(n, options));
 
-  return callback({ ctx, nodes, warn });
+  return callback({ ctx, nodes, warn, options, parsedNodes });
 }

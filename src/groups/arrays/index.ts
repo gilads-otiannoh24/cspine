@@ -1,9 +1,11 @@
 import { Config, CSPineUtil } from "@/CSPine";
 import { MagicUtilities } from "alpinejs";
 import { filter } from "./filter";
+import { generate } from "./generate";
 
 export interface ArrayUtils {
   filter(e?: Event): any[];
+  generate(e?: Event): any[];
 }
 
 export function array(
@@ -14,6 +16,10 @@ export function array(
   return {
     filter(e) {
       return filter(el, { ...options, config, e, this: this });
+    },
+
+    generate(e) {
+      return generate(el, { ...options, config, e, this: this });
     },
 
     $config: {

@@ -11,32 +11,44 @@ export type Stack<T> = {
   update(): Promise<void>;
 };
 
+let AlpineStarted = false;
+
 export async function setupDom(
-  html: string,
+  html: string | null,
   testData?: () => AlpineComponent<any>
 ) {
-  (window as any).Apline = Alpine;
+  if (html !== null) document.body.innerHTML = html;
 
-  document.body.innerHTML = html;
+  if (html === null) {
+    const currrentHTML = document.body.innerHTML;
+
+    document.body.innerHTML = "";
+    document.body.innerHTML = currrentHTML;
+  }
 
   Alpine.data("TestData", testData ?? ((): AlpineComponent<any> => ({})));
-
   Alpine.plugin(CSPine.plugin);
-  Alpine.start();
+
+  if (!AlpineStarted) {
+    AlpineStarted = true;
+    Alpine.start();
+  }
 
   await domUpdate();
 }
 
 export async function setupTestFrame(
-  innerHtml: string,
+  innerHtml: string | null,
   data?: AlpineComponent<any>
 ) {
   await setupDom(
-    /* html */ `
+    innerHtml
+      ? /* html */ `
     <main id="main_test_data_element" x-data="TestData">
       ${innerHtml}
     </main>
-  `,
+  `
+      : null,
     () => data ?? {}
   );
 }

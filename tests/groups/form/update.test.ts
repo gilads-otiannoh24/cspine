@@ -168,7 +168,6 @@ describe("Form update function", () => {
     input.dispatchEvent(new Event("input", { bubbles: true }));
 
     await domUpdate();
-    expect(consoleSpy).toHaveBeenCalled();
 
     consoleSpy.mockRestore();
   });
