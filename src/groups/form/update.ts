@@ -8,7 +8,7 @@ export function update(el: HTMLElement, options: Options) {
   const ctx = useContext(el, { fn: "update", group: "form" }, options, true);
   const { fn, group, parsed, nodes } = ctx;
   const { e: event, this: cp } = options;
-  const { value, type, files } = event?.target as HTMLInputElement;
+  const { value, type, files, checked } = event?.target as HTMLInputElement;
   const warn = warnE(fn, group, el);
 
   if (!nodes.length) return warn.emptyNode();
@@ -22,7 +22,7 @@ export function update(el: HTMLElement, options: Options) {
   const eventNode = resolveEventNode(nodes, options);
   const val =
     {
-      checkbox: value === "on",
+      checkbox: checked,
       number: Number(value) || 0,
       range: Number(value),
       date: new Date(value),
