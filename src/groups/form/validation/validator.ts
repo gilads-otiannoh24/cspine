@@ -1,5 +1,5 @@
 import z, { ZodSchema } from "zod";
-import { $ZodIssue } from "zod/v4/core/errors.cjs";
+import { $ZodIssue } from "zod/v4/core";
 
 type SchemaMap = Record<string, ZodSchema<any>>;
 

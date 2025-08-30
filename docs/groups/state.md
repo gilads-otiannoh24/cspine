@@ -53,7 +53,7 @@ CSPine’s `state` group provides utility functions for working with state and r
 **How it’s used:**
 
 ```html
-<div x-show="$_state.empty" data-cspine="empty:items"></div>
+<div x-show="$_.state.empty" data-cspine="empty:items"></div>
 ```
 
 **Special:** Returns a boolean. Useful in conditional rendering.
@@ -81,7 +81,7 @@ CSPine’s `state` group provides utility functions for working with state and r
 **How it’s used:**
 
 ```html
-<div x-show="$_state.not" data-cspine="not:visible"></div>
+<div x-show="$_.state.not" data-cspine="not:visible"></div>
 ```
 
 **Special:** Can be casted and used directly in conditions.
@@ -95,7 +95,7 @@ CSPine’s `state` group provides utility functions for working with state and r
 **How it’s used:**
 
 ```html
-<div x-text="$_state.type" data-cspine="type:status"></div>
+<div x-text="$_.state.type" data-cspine="type:status"></div>
 ```
 
 **Special:** Useful in dynamic evaluations or debugging.
@@ -109,7 +109,7 @@ CSPine’s `state` group provides utility functions for working with state and r
 **How it’s used:**
 
 ```html
-<div x-show="$_state.equals" data-cspine="equals:count->10(number)"></div>
+<div x-show="$_.state.equals" data-cspine="equals:count->10(number)"></div>
 ```
 
 **Special:** Supports casting for accurate comparison.
@@ -124,7 +124,7 @@ CSPine’s `state` group provides utility functions for working with state and r
 
 ```html
 <div
-  x-show="$_state.notEquals"
+  x-show="$_.state.notEquals"
   data-cspine="notEquals:status->'inactive'(string)"
 ></div>
 ```
@@ -141,7 +141,7 @@ CSPine’s `state` group provides utility functions for working with state and r
 
 ```html
 <div
-  x-show="$_state.greaterThan"
+  x-show="$_.state.greaterThan"
   data-cspine="greaterThan:count->5(number)"
 ></div>
 ```
@@ -157,7 +157,7 @@ CSPine’s `state` group provides utility functions for working with state and r
 **How it’s used:**
 
 ```html
-<div x-show="$_state.lessThan" data-cspine="lessThan:count->5(number)"></div>
+<div x-show="$_.state.lessThan" data-cspine="lessThan:count->5(number)"></div>
 ```
 
 **Special:** Supports numeric and date values.
@@ -172,7 +172,7 @@ CSPine’s `state` group provides utility functions for working with state and r
 
 ```html
 <div
-  x-show="$_state.greaterThanOrEqual"
+  x-show="$_.state.greaterThanOrEqual"
   data-cspine="greaterThanOrEqual:count->10(number)"
 ></div>
 ```
@@ -187,7 +187,7 @@ CSPine’s `state` group provides utility functions for working with state and r
 
 ```html
 <div
-  x-show="$_state.lessThanOrEqual"
+  x-show="$_.state.lessThanOrEqual"
   data-cspine="lessThanOrEqual:count->10(number)"
 ></div>
 ```

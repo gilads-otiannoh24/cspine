@@ -1,4 +1,4 @@
-import { z, ZodType, ZodTypeAny } from "zod";
+import { z } from "zod";
 import { ruleMap } from "./validationPresets";
 
 export type CustomMessages = Record<string, string>;
@@ -6,13 +6,13 @@ export type CustomMessages = Record<string, string>;
 export function parseValidationRules(
   ruleString: string,
   customMessages?: CustomMessages
-): ZodTypeAny {
+): z.ZodType {
   const rules = ruleString
     .split(",")
     .map((rule) => rule.trim())
     .filter(Boolean);
 
-  let schema: ZodTypeAny = z.string();
+  let schema: z.ZodType = z.string();
 
   for (const rule of rules) {
     const [rawKey, ...paramParts] = rule.split(":");
@@ -44,7 +44,7 @@ export function parseValidationRules(
 
     const customHandler =
       overrideMessage && typeof definition.handler === "function"
-        ? (schema: ZodTypeAny) => {
+        ? (schema: z.ZodType) => {
             // try to inject custom message if param exists
             try {
               if (

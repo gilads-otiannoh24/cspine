@@ -4,12 +4,14 @@ import { log } from "./log";
 import { call } from "./call";
 import { switchFn } from "./switch";
 import { bindTo } from "./bindTo";
+import { evaluate } from "./evaluate";
 
 export interface Utils {
-  switch(alpine: AlpineComponent<any>): void;
-  bindTo(alpine: AlpineComponent<any>): void;
+  switch(): void;
+  bindTo(): void;
   call(): any;
-  log(alpine: AlpineComponent<any>): any;
+  log(): any;
+  evaluate(): any;
 }
 
 export function util(
@@ -32,6 +34,10 @@ export function util(
 
     log() {
       return log($el, { ...options, this: this, config });
+    },
+
+    evaluate() {
+      return evaluate($el, { ...options, this: this, config });
     },
 
     $config: {

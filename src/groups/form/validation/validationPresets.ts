@@ -1,7 +1,7 @@
-import { z, ZodString, ZodTypeAny } from "zod";
+import { z } from "zod";
 
 export type RuleDefinition = {
-  handler: (schema: ZodTypeAny, param?: string) => ZodTypeAny;
+  handler: (schema: z.ZodType, param?: string) => z.ZodType;
   message?: string;
 };
 

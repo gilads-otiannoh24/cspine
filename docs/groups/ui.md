@@ -37,7 +37,7 @@ The x-data is inline here but remember when uing csp build use `Alpine.data('dat
 If `isActive` is `true`, the element becomes:
 
 ```html
-<div class="base highlight visible"></div>
+<div class="visible base highlight"></div>
 ```
 
 Otherwise, it remains:
