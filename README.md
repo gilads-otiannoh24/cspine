@@ -1,4 +1,4 @@
-# CSPine v2 🧠✨
+# CSPine 🧠✨
 
 > **Composable State & Behavior Management for Alpine.js (CSP Build Ready)**  
 > Write compact, expressive logic with a DSL that works in CSP-restricted environments.

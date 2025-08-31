@@ -21,7 +21,7 @@ export function useContext(
   let parsed;
   let node = nodes[0] ?? undefined;
 
-  if (nodes) {
+  if (nodes.length) {
     parsed = parseNode(nodes[0], options);
   }
 

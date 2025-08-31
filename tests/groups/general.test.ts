@@ -10,6 +10,7 @@ import { beforeAll, describe, expect, it } from "vitest";
 type Component = {
   x: number;
   y: string;
+  arr: string[][];
 };
 
 describe("General CSPine event binding", () => {
@@ -17,11 +18,18 @@ describe("General CSPine event binding", () => {
     const data: AlpineComponent<Component> = {
       x: 0,
       y: "",
+      arr: [["ian"], ["wesley"], ["tarvel"], ["antoline"], ["inno"], ["leah"]],
     };
 
     setupTestFrame(
       /* html */ `
       <div id="div" @keydown="$_.state.set" @click="$_.state.set" data-cspine="state.set:x->1(number)|event='click';state.set:x->2(number)|event='keydown';set:y->'I am binded to both events'|event='click,keydown'"></div>
+
+       <div id="case">
+        <template id="tmpl" x-for="person in arr">
+          <div data-cspine="util.evaluate:person[0]" x-text="$_.util.evaluate"></div>
+        </template>
+      </div>
       `,
       data
     );
@@ -50,5 +58,13 @@ describe("General CSPine event binding", () => {
 
     expect(stack.data.x).toBe(2);
     expect(stack.data.y).toBe("I am binded to both events");
+  });
+
+  it("can read from an array successfully", async () => {
+    const div = document.getElementById("case")!;
+    const divs = div.querySelectorAll("div");
+
+    expect(divs.length).toBe(6);
+    expect(divs[0].textContent).toBe("ian");
   });
 });

@@ -4,6 +4,7 @@ import { castValue } from "./castValue";
 import { Options } from "@/CSPine";
 import { parse } from "@/v2/dsl/parse";
 import { ASTNode, NormalNode } from "@/v2/dsl/types";
+import { validateASTNode } from "./inputValidator";
 
 type Dataset = DOMStringMap;
 
@@ -57,12 +58,14 @@ export function resolveData(
 
   const ast = parse(input);
 
+  console.log(ast);
+
   const nodes = ast.filter((s) => {
     if (fnName === "call" && group === "util") {
       return s.type === "call";
     }
 
-    const namedGroup = (s as NormalNode).commandArgs.named?.group;
+    const namedGroup = (s as NormalNode).commandArgs?.named?.group;
     const n = s as NormalNode;
 
     return namedGroup

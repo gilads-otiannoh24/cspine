@@ -3,6 +3,7 @@ import { castValue } from "./castValue";
 import { ASTNode, CallNode, CommandArgs, NormalNode } from "@/v2/dsl/types";
 import { resolveContextRefs } from "./resolveContectRefs";
 import { buildCommandArgs } from "./buislCommandArgs";
+import { validateASTNode } from "./inputValidator";
 
 type CallArg = {
   value: any;
@@ -25,6 +26,9 @@ export function parseNode(
   options: Options,
   log: boolean = false
 ): ParsedNode | null {
+  // validate node structure and throw error on invalidity before parsing
+  validateASTNode(node, options);
+
   let parsedNode: ParsedNode | null = null;
   const commandArgs = buildCommandArgs(node.commandArgs, options);
 

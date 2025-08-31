@@ -1,5 +1,5 @@
 import { parse } from "@/v2/dsl/parse";
-import { NormalNode } from "@/v2/dsl/types";
+import { ASTNode, NormalNode } from "@/v2/dsl/types";
 import { describe, expect, it } from "vitest";
 
 describe("AST Builder - normal mode", () => {
@@ -16,6 +16,7 @@ describe("AST Builder - normal mode", () => {
           named: {},
         },
         type: "normal",
+        input: "set:x->10;",
       },
     ]);
   });
@@ -33,6 +34,7 @@ describe("AST Builder - normal mode", () => {
         },
         type: "normal",
         target: null,
+        input: "set:x;",
       },
     ]);
   });
@@ -50,6 +52,7 @@ describe("AST Builder - normal mode", () => {
         },
         type: "normal",
         target: null,
+        input: "set:x|'hello;",
       },
     ]);
   });
@@ -71,6 +74,7 @@ describe("AST Builder - normal mode", () => {
           named: {},
         },
         type: "normal",
+        input: "set:x->'hello'(string)",
       },
     ]);
   });
@@ -91,6 +95,7 @@ describe("AST Builder - normal mode", () => {
           named: {},
         },
         type: "normal",
+        input: "set:x->'hello';",
       },
     ]);
   });
@@ -109,6 +114,7 @@ describe("AST Builder - normal mode", () => {
           named: {},
         },
         type: "normal",
+        input: "state.set:x->45(number);",
       },
       {
         group: "fn",
@@ -120,6 +126,7 @@ describe("AST Builder - normal mode", () => {
           named: {},
         },
         type: "normal",
+        input: "fn.set:y->user.id(string);",
       },
     ]);
   });
@@ -138,6 +145,7 @@ describe("AST Builder - normal mode", () => {
           named: {},
         },
         type: "normal",
+        input: "set:ready->true(bool);",
       },
       {
         group: null,
@@ -149,6 +157,7 @@ describe("AST Builder - normal mode", () => {
           named: {},
         },
         type: "normal",
+        input: "set:active->false(bool);",
       },
     ]);
   });
@@ -175,13 +184,14 @@ describe("AST Builder - normal mode", () => {
           named: {},
         },
         type: "normal",
+        input: "set:$store.user.age->45(number);",
       },
     ]);
   });
 
   it("should parse a number as a named attribute", () => {
     const ast = parse(`set:$store.user.age->45(number)|10='red'`); // no ->
-    expect(ast).toEqual<NormalNode[]>([
+    expect(ast).toEqual<ASTNode[]>([
       {
         group: null,
         command: "set",
@@ -206,6 +216,7 @@ describe("AST Builder - normal mode", () => {
           },
         },
         type: "normal",
+        input: "set:$store.user.age->45(number)|10='red';",
       },
     ]);
   });
@@ -226,6 +237,7 @@ describe("AST Builder - normal mode", () => {
           named: {},
         },
         type: "normal",
+        input: "toggle:toggleClass;",
       },
 
       {
@@ -248,6 +260,7 @@ describe("AST Builder - normal mode", () => {
           },
         },
         type: "normal",
+        input: "classtoggle:toggleclass|'success','warning',value='foo';",
       },
       {
         group: null,
@@ -259,6 +272,7 @@ describe("AST Builder - normal mode", () => {
           named: {},
         },
         type: "normal",
+        input: "log:$_.ui.classToggle;",
       },
     ]);
   });

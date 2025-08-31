@@ -22,6 +22,7 @@ export type Token =
   | { type: "paren_close" }
   | { type: "comma" }
   | { type: "semicolon" }
+  | { type: "input"; value: string }
   | { type: "eof" };
 
 export function tokenize(input: string, log: boolean = false): Token[] {
@@ -36,7 +37,7 @@ export function tokenize(input: string, log: boolean = false): Token[] {
     tokens.push({ type: "command_type", value: type });
 
     const regex =
-      /@use\.[a-zA-Z_][a-zA-Z0-9_]*|\s+|(['"])(.*?)\1(?:\([a-zA-Z_][a-zA-Z0-9_]*\))?|"(.*?)"|\d+\([a-zA-Z_][a-zA-Z0-9_]*\)|[\$a-zA-Z_][\$a-zA-Z0-9_\.]*\([a-zA-Z_][a-zA-Z0-9_]*\)|[\$a-zA-Z_][\$a-zA-Z0-9_]*(?:\.[\$a-zA-Z_][\$a-zA-Z0-9_]*)?:[\$a-zA-Z_][\$a-zA-Z0-9_\.]*|->|\d+|true|false|\([a-zA-Z_][a-zA-Z0-9_]*\)|[+\-*/%]?=|\(|\)|,|;|\||[\$a-zA-Z_][\$a-zA-Z0-9_\.]*/g;
+      /@use\.[a-zA-Z_][a-zA-Z0-9_]*|\s+|(['"])(.*?)\1(?:\([a-zA-Z_][a-zA-Z0-9_]*\))?|"([^"]*?)"|\d+\([a-zA-Z_][a-zA-Z0-9_]*\)|[\$a-zA-Z_][\$a-zA-Z0-9_]*(?:\[[^\]]+\]|\.[\$a-zA-Z_][\$a-zA-Z0-9_]*)*\([a-zA-Z_][a-zA-Z0-9_]*\)|[\$a-zA-Z_][\$a-zA-Z0-9_]*(?:\.[\$a-zA-Z_][\$a-zA-Z0-9_]*)?:[\$a-zA-Z_][\$a-zA-Z0-9_]*(?:\[[^\]]+\]|\.[\$a-zA-Z_][\$a-zA-Z0-9_]*)*|->|\d+|true|false|\([a-zA-Z_][a-zA-Z0-9_]*\)|[+\-*/%]?=|\(|\)|,|;|\||[\$a-zA-Z_][\$a-zA-Z0-9_]*(?:\[[^\]]+\]|\.[\$a-zA-Z_][\$a-zA-Z0-9_]*)*/g;
 
     let seg = segment + ";";
     let match;
@@ -50,7 +51,9 @@ export function tokenize(input: string, log: boolean = false): Token[] {
       }
 
       if (
-        /^([a-zA-Z_]+\.)?[a-zA-Z_]+:[\$a-zA-Z_][\$a-zA-Z0-9_\.]*$/.test(text)
+        /^([a-zA-Z_]+\.)?[a-zA-Z_]+:[\$a-zA-Z_][\$a-zA-Z0-9_]*(?:\[[^\]]+\]|\.[\$a-zA-Z_][\$a-zA-Z0-9_]*)*$/.test(
+          text
+        )
       ) {
         const [left, ref] = text.split(":");
         const parts = left.split(".");
@@ -82,6 +85,8 @@ export function tokenize(input: string, log: boolean = false): Token[] {
           const value = match[2]; // inner quoted string
           const cast = match[3]; // optional cast
           tokens.push({ type: "literal", value });
+          if (log) console.log("got here1");
+
           if (cast) tokens.push({ type: "cast", value: cast });
         }
       }
@@ -95,9 +100,9 @@ export function tokenize(input: string, log: boolean = false): Token[] {
         }
       }
 
-      // Casted reference: user.id(number)
+      // Casted reference: e.g. user.id(number), user['name'](string), arr[0].id(int)
       else if (
-        /^[\$a-zA-Z_][\$a-zA-Z0-9_\.]*\([\$a-zA-Z_][\$a-zA-Z0-9_]*\)$/.test(
+        /^[\$a-zA-Z_][\$a-zA-Z0-9_]*(?:\[[^\]]+\]|\.[\$a-zA-Z_][\$a-zA-Z0-9_]*)*\([a-zA-Z_][a-zA-Z0-9_]*\)$/.test(
           text
         )
       ) {
@@ -105,19 +110,45 @@ export function tokenize(input: string, log: boolean = false): Token[] {
         const cast = text.slice(text.indexOf("(") + 1, -1);
 
         const normalized = val.toLowerCase();
-
         if (normalized === "true" || normalized === "false") {
           tokens.push({ type: "literal", value: val });
           tokens.push({ type: "cast", value: cast });
         } else {
-          tokens.push({ type: "reference", value: val });
-          tokens.push({ type: "cast", value: cast });
+          if (log) console.log("got here2");
+
+          // fix: for calls without dots and single arguent being treated as casts
+          //  i.e fn(name) name will be treated as cast instead of reference
+          if (
+            tokens.length === 1 &&
+            tokens[0].type === "command_type" &&
+            type === "call"
+          ) {
+            tokens.push({ type: "reference", value: val });
+            tokens.push({ type: "paren_open" });
+            tokens.push({ type: "reference", value: cast });
+            tokens.push({ type: "paren_close" });
+          } else {
+            tokens.push({ type: "reference", value: val });
+            tokens.push({ type: "cast", value: cast });
+          }
         }
       }
 
-      // Standalone cast
+      // Standalone cast — only valid if the previous token is a literal or reference
       else if (/^\([a-zA-Z_][a-zA-Z0-9_]*\)$/.test(text)) {
-        tokens.push({ type: "cast", value: text.slice(1, -1) });
+        const prev = tokens[tokens.length - 1];
+        if (
+          prev &&
+          (prev.type === "literal" || prev.type === "reference") &&
+          type === "normal"
+        ) {
+          if (log) console.log("got here3");
+
+          tokens.push({ type: "cast", value: text.slice(1, -1) });
+        } else {
+          // Treat as a grouped reference/argument instead, not a cast
+          tokens.push({ type: "reference", value: text.slice(1, -1) });
+        }
       }
 
       // Quoted strings
@@ -177,6 +208,7 @@ export function tokenize(input: string, log: boolean = false): Token[] {
       else if (text === ",") {
         tokens.push({ type: "comma" });
       } else if (text === ";") {
+        tokens.push({ type: "input", value: seg });
         tokens.push({ type: "semicolon" });
       } else if (text === "(") {
         tokens.push({ type: "paren_open" });

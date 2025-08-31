@@ -1,4 +1,6 @@
-export type ASTNode = NormalNode | CallNode | ScopeUseNode;
+export type ASTNode = {
+  input: string;
+} & (NormalNode | CallNode | ScopeUseNode);
 
 export interface ValueNode {
   type: "literal" | "reference";

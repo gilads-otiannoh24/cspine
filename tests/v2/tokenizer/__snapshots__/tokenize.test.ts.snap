@@ -1,6 +1,76 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Tokenizer > should tokenize @use scope refenrence 1`] = `
+exports[`Tokenizer > should call function with the arguments (without dot operator) as reference unless quoted 1`] = `
+[
+  {
+    "type": "command_type",
+    "value": "call",
+  },
+  {
+    "type": "reference",
+    "value": "fn",
+  },
+  {
+    "type": "paren_open",
+  },
+  {
+    "type": "reference",
+    "value": "name",
+  },
+  {
+    "type": "paren_close",
+  },
+  {
+    "type": "input",
+    "value": "fn(name);",
+  },
+  {
+    "type": "semicolon",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should call function with the arguments (without dot operator) as reference unless quoted 2`] = `
+[
+  {
+    "type": "command_type",
+    "value": "call",
+  },
+  {
+    "type": "reference",
+    "value": "fn",
+  },
+  {
+    "type": "paren_open",
+  },
+  {
+    "type": "reference",
+    "value": "name",
+  },
+  {
+    "type": "cast",
+    "value": "string",
+  },
+  {
+    "type": "paren_close",
+  },
+  {
+    "type": "input",
+    "value": "fn(name(string));",
+  },
+  {
+    "type": "semicolon",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should tokenize @use scope reference 1`] = `
 [
   {
     "type": "command_type",
@@ -19,6 +89,10 @@ exports[`Tokenizer > should tokenize @use scope refenrence 1`] = `
     "otherValues": [],
     "type": "named_arg",
     "value": "true",
+  },
+  {
+    "type": "input",
+    "value": "@use.set|silent=true;",
   },
   {
     "type": "semicolon",
@@ -68,6 +142,288 @@ exports[`Tokenizer > should tokenize @use scope refenrence 1`] = `
     "type": "paren_close",
   },
   {
+    "type": "input",
+    "value": "alert("Welcome"(string), user.id(string), 3000(number));",
+  },
+  {
+    "type": "semicolon",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should tokenize an array access (of type string without quotes) as a reference 1`] = `
+[
+  {
+    "type": "command_type",
+    "value": "normal",
+  },
+  {
+    "type": "command_group",
+    "value": "state",
+  },
+  {
+    "type": "command",
+    "value": "set",
+  },
+  {
+    "type": "reference",
+    "value": "user.name[id]",
+  },
+  {
+    "type": "arrow",
+  },
+  {
+    "type": "reference",
+    "value": "name",
+  },
+  {
+    "type": "input",
+    "value": "state.set:user.name[id]->name;",
+  },
+  {
+    "type": "semicolon",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should tokenize an array access (of type string without quotes) as a target 1`] = `
+[
+  {
+    "type": "command_type",
+    "value": "normal",
+  },
+  {
+    "type": "command_group",
+    "value": "state",
+  },
+  {
+    "type": "command",
+    "value": "set",
+  },
+  {
+    "type": "reference",
+    "value": "user.name",
+  },
+  {
+    "type": "arrow",
+  },
+  {
+    "type": "reference",
+    "value": "name[id]",
+  },
+  {
+    "type": "cast",
+    "value": "string",
+  },
+  {
+    "type": "input",
+    "value": "state.set:user.name->name[id](string);",
+  },
+  {
+    "type": "semicolon",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should tokenize an array access (of type string) as a reference 1`] = `
+[
+  {
+    "type": "command_type",
+    "value": "normal",
+  },
+  {
+    "type": "command_group",
+    "value": "state",
+  },
+  {
+    "type": "command",
+    "value": "set",
+  },
+  {
+    "type": "reference",
+    "value": "user.name['id']",
+  },
+  {
+    "type": "arrow",
+  },
+  {
+    "type": "reference",
+    "value": "name",
+  },
+  {
+    "type": "input",
+    "value": "state.set:user.name['id']->name;",
+  },
+  {
+    "type": "semicolon",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should tokenize an array access (of type string) as a target 1`] = `
+[
+  {
+    "type": "command_type",
+    "value": "normal",
+  },
+  {
+    "type": "command_group",
+    "value": "state",
+  },
+  {
+    "type": "command",
+    "value": "set",
+  },
+  {
+    "type": "reference",
+    "value": "user.name",
+  },
+  {
+    "type": "arrow",
+  },
+  {
+    "type": "reference",
+    "value": "name['id']",
+  },
+  {
+    "type": "cast",
+    "value": "string",
+  },
+  {
+    "type": "input",
+    "value": "state.set:user.name->name['id'](string);",
+  },
+  {
+    "type": "semicolon",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should tokenize an array access (with deep nesting) as a reference 1`] = `
+[
+  {
+    "type": "command_type",
+    "value": "normal",
+  },
+  {
+    "type": "command_group",
+    "value": "state",
+  },
+  {
+    "type": "command",
+    "value": "set",
+  },
+  {
+    "type": "reference",
+    "value": "user.name['id'][0].friends[0].id",
+  },
+  {
+    "type": "arrow",
+  },
+  {
+    "type": "reference",
+    "value": "name",
+  },
+  {
+    "type": "input",
+    "value": "state.set:user.name['id'][0].friends[0].id->name;",
+  },
+  {
+    "type": "semicolon",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should tokenize an array access as a reference 1`] = `
+[
+  {
+    "type": "command_type",
+    "value": "normal",
+  },
+  {
+    "type": "command_group",
+    "value": "state",
+  },
+  {
+    "type": "command",
+    "value": "set",
+  },
+  {
+    "type": "reference",
+    "value": "user.name[0]",
+  },
+  {
+    "type": "arrow",
+  },
+  {
+    "type": "reference",
+    "value": "name",
+  },
+  {
+    "type": "input",
+    "value": "state.set:user.name[0]->name;",
+  },
+  {
+    "type": "semicolon",
+  },
+  {
+    "type": "eof",
+  },
+]
+`;
+
+exports[`Tokenizer > should tokenize an array access as a target 1`] = `
+[
+  {
+    "type": "command_type",
+    "value": "normal",
+  },
+  {
+    "type": "command_group",
+    "value": "state",
+  },
+  {
+    "type": "command",
+    "value": "set",
+  },
+  {
+    "type": "reference",
+    "value": "user.name",
+  },
+  {
+    "type": "arrow",
+  },
+  {
+    "type": "reference",
+    "value": "name[0]",
+  },
+  {
+    "type": "cast",
+    "value": "string",
+  },
+  {
+    "type": "input",
+    "value": "state.set:user.name->name[0](string);",
+  },
+  {
     "type": "semicolon",
   },
   {
@@ -96,6 +452,10 @@ exports[`Tokenizer > should tokenize basic set command with literal 1`] = `
   {
     "type": "literal",
     "value": "10",
+  },
+  {
+    "type": "input",
+    "value": "set:x->10;",
   },
   {
     "type": "semicolon",
@@ -149,6 +509,10 @@ exports[`Tokenizer > should tokenize booleans and casts 1`] = `
     "value": "foo",
   },
   {
+    "type": "input",
+    "value": "set:ready->true(bool)|'user',option='foo,operator,name.id';",
+  },
+  {
     "type": "semicolon",
   },
   {
@@ -173,6 +537,10 @@ exports[`Tokenizer > should tokenize booleans and casts 1`] = `
   {
     "type": "cast",
     "value": "bool",
+  },
+  {
+    "type": "input",
+    "value": "set:flag->false(bool);",
   },
   {
     "type": "semicolon",
@@ -213,6 +581,10 @@ exports[`Tokenizer > should tokenize casted literals and references 1`] = `
     "value": "number",
   },
   {
+    "type": "input",
+    "value": "state.set:x->45(number);",
+  },
+  {
     "type": "semicolon",
   },
   {
@@ -237,6 +609,10 @@ exports[`Tokenizer > should tokenize casted literals and references 1`] = `
   {
     "type": "cast",
     "value": "string",
+  },
+  {
+    "type": "input",
+    "value": "set:y->user.id(string);",
   },
   {
     "type": "semicolon",
@@ -294,6 +670,10 @@ exports[`Tokenizer > should tokenize function call with mixed arguments 1`] = `
     "type": "paren_close",
   },
   {
+    "type": "input",
+    "value": "alert("Welcome"(string), user.id(string), 3000(number));",
+  },
+  {
     "type": "semicolon",
   },
   {
@@ -327,6 +707,10 @@ exports[`Tokenizer > should tokenize multiple calls separated by semicolon 1`] =
     "type": "paren_close",
   },
   {
+    "type": "input",
+    "value": "show("Saved!"(string));",
+  },
+  {
     "type": "semicolon",
   },
   {
@@ -342,6 +726,10 @@ exports[`Tokenizer > should tokenize multiple calls separated by semicolon 1`] =
   },
   {
     "type": "paren_close",
+  },
+  {
+    "type": "input",
+    "value": "refresh();",
   },
   {
     "type": "semicolon",
@@ -367,6 +755,10 @@ exports[`Tokenizer > should tokenize multiple calls separated by semicolon 1`] =
   },
   {
     "type": "paren_close",
+  },
+  {
+    "type": "input",
+    "value": "log("done"(string));",
   },
   {
     "type": "semicolon",
@@ -403,6 +795,10 @@ exports[`Tokenizer > should tokenize reference chaining with @scope 1`] = `
     "value": "number",
   },
   {
+    "type": "input",
+    "value": "set:@this.user.age->30(number);",
+  },
+  {
     "type": "semicolon",
   },
   {
@@ -430,6 +826,10 @@ exports[`Tokenizer > should tokenize simple function call with no cast 1`] = `
   },
   {
     "type": "paren_close",
+  },
+  {
+    "type": "input",
+    "value": "log("debug");",
   },
   {
     "type": "semicolon",

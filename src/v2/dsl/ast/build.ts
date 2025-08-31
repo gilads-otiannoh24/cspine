@@ -12,26 +12,40 @@ export function buildAST(inputTokens: Token[], log: boolean = false) {
 
   const asts: ASTNode[] = [];
 
-  commands.forEach((command) => {
+  commands.forEach((c) => {
     let parsed = false;
+    const inputToken = c.filter((t) => t.type === "input")[0] ?? {};
+    const command = c.filter((t) => t.type !== "input");
 
-    for (let i = 0; i < command.length; i++) {
+    for (let i = 0; i < c.length; i++) {
       const token = command[i];
 
       if (parsed) break;
 
       if (token.type === "command_type" && token.value === "call") {
-        asts.push(...buildCallAST(command, log));
+        const node: ASTNode = {
+          ...(buildCallAST(command, log)[0] ?? {}),
+          input: inputToken.value ?? "",
+        };
+        asts.push(node);
         parsed = true;
       }
 
       if (token.type === "command_type" && token.value === "normal") {
-        asts.push(...buildNormalAST(command, log));
+        const node: ASTNode = {
+          ...(buildNormalAST(command, log)[0] ?? {}),
+          input: inputToken.value ?? "",
+        };
+        asts.push(node);
         parsed = true;
       }
 
       if (token.type === "command_type" && token.value === "scope_use") {
-        asts.push(...buildScopeUseAST(command, log));
+        const node: ASTNode = {
+          ...(buildScopeUseAST(command, log)[0] ?? {}),
+          input: inputToken.value ?? "",
+        };
+        asts.push(node);
         parsed = true;
       }
     }
@@ -39,5 +53,9 @@ export function buildAST(inputTokens: Token[], log: boolean = false) {
     if (parsed) return;
   });
 
-  return asts;
+  return asts.filter((ast) => {
+    if (ast.input && Object.keys(ast).length === 1) return false;
+
+    return true;
+  });
 }

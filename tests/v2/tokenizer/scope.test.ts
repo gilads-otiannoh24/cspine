@@ -1,5 +1,3 @@
-// tests/tokenizeScope.test.ts
-
 import { tokenizeScope, tokenizeArgs } from "@/v2/dsl/tokenizer/scope";
 import { describe, it, expect } from "vitest";
 

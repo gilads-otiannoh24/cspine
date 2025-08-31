@@ -43,10 +43,64 @@ describe("Tokenizer", () => {
     expect(tokens).toMatchSnapshot();
   });
 
-  it("should tokenize @use scope refenrence", () => {
+  it("should tokenize @use scope reference", () => {
     const tokens = tokenize(
       `@use.set|silent=true;alert("Welcome"(string), user.id(string), 3000(number))`
     );
+    expect(tokens).toMatchSnapshot();
+  });
+
+  it("should tokenize an array access as a target", () => {
+    const tokens = tokenize(`state.set:user.name->name[0](string)`);
+
+    expect(tokens).toMatchSnapshot();
+  });
+
+  it("should tokenize an array access (of type string) as a target", () => {
+    const tokens = tokenize(`state.set:user.name->name['id'](string)`);
+
+    expect(tokens).toMatchSnapshot();
+  });
+
+  it("should tokenize an array access (of type string without quotes) as a target", () => {
+    const tokens = tokenize(`state.set:user.name->name[id](string)`);
+
+    expect(tokens).toMatchSnapshot();
+  });
+
+  it("should tokenize an array access as a reference", () => {
+    const tokens = tokenize(`state.set:user.name[0]->name`);
+
+    expect(tokens).toMatchSnapshot();
+  });
+
+  it("should tokenize an array access (of type string) as a reference", () => {
+    const tokens = tokenize(`state.set:user.name['id']->name`);
+
+    expect(tokens).toMatchSnapshot();
+  });
+
+  it("should tokenize an array access (of type string without quotes) as a reference", () => {
+    const tokens = tokenize(`state.set:user.name[id]->name`);
+
+    expect(tokens).toMatchSnapshot();
+  });
+
+  it("should tokenize an array access (with deep nesting) as a reference", () => {
+    const tokens = tokenize(`state.set:user.name['id'][0].friends[0].id->name`);
+
+    expect(tokens).toMatchSnapshot();
+  });
+
+  it("should call function with the arguments (without dot operator) as reference unless quoted", () => {
+    const tokens = tokenize(`fn(name)`, true);
+
+    expect(tokens).toMatchSnapshot();
+  });
+
+  it("should call function with the arguments (without dot operator) as reference unless quoted", () => {
+    const tokens = tokenize(`fn(name(string))`);
+
     expect(tokens).toMatchSnapshot();
   });
 });
