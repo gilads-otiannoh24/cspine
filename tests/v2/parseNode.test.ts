@@ -60,6 +60,7 @@ describe("parseNode - normal node parsing", () => {
         positional: [],
         named: {},
       },
+      input: "",
     };
 
     const result = parseNode(node, mockOptions);
@@ -82,6 +83,7 @@ describe("parseNode - normal node parsing", () => {
         positional: [],
         named: {},
       },
+      input: "",
     };
 
     const result = parseNode(node, mockOptions);
@@ -104,6 +106,7 @@ describe("parseNode - normal node parsing", () => {
         positional: [],
         named: {},
       },
+      input: "",
     };
 
     const result = parseNode(node, mockOptions);
@@ -126,6 +129,7 @@ describe("parseNode - normal node parsing", () => {
         positional: [],
         named: {},
       },
+      input: "",
     };
 
     const result = parseNode(node, mockOptions);
@@ -148,6 +152,7 @@ describe("parseNode - normal node parsing", () => {
         positional: [],
         named: {},
       },
+      input: "",
     };
 
     const result = parseNode(node, mockOptions);
@@ -170,6 +175,7 @@ describe("parseNode - normal node parsing", () => {
         positional: [],
         named: {},
       },
+      input: "",
     };
 
     const result = parseNode(node, mockOptions);
@@ -203,6 +209,7 @@ describe("parseNode - call node parsing", () => {
         positional: [],
         named: {},
       },
+      input: "",
     };
 
     const result = parseNode(node, mockOptions, true);
@@ -227,6 +234,7 @@ describe("parseNode - call node parsing", () => {
         positional: [],
         named: {},
       },
+      input: "",
     };
 
     const result = parseNode(node, mockOptions);
@@ -262,6 +270,7 @@ describe("parseNode - call node parsing", () => {
           },
         },
       },
+      input: "",
     };
 
     const result = parseNode(node, mockOptions);
