@@ -34,8 +34,6 @@ export function validateASTNode(node: ASTNode, options: Options): void {
   const element = (options.this as any).$el;
 
   if (!node || typeof node !== "object") {
-    console.log(node);
-
     throw new ValidationError("Invalid AST node: not an object", node, element);
   }
 

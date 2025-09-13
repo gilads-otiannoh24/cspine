@@ -45,7 +45,6 @@ describe("state.and function", () => {
     await domUpdate();
 
     stack.load();
-    console.log(stack.data);
 
     span = document.getElementById("output");
     expect(span?.style.display).toBe("none");
@@ -79,7 +78,6 @@ describe("state.and function", () => {
     setupTestFrame(null, { bar: true });
     await domUpdate();
     stack.load();
-    console.log(stack.data);
 
     span = document.getElementById("output");
     expect(span?.style.display).toBe("none");

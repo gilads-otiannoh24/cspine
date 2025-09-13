@@ -58,8 +58,6 @@ export function resolveData(
 
   const ast = parse(input);
 
-  console.log(ast);
-
   const nodes = ast.filter((s) => {
     if (fnName === "call" && group === "util") {
       return s.type === "call";
